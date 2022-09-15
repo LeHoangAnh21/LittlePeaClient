@@ -1,0 +1,80 @@
+.blog_detail{
+	background: #f0f0f0;
+	padding: 50px;
+}
+
+.company_info {
+	display: flex;
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+.company_avatar {
+	width: 10%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.avatar {
+	width: 120px;
+	height: 120px;
+	border-radius: 75px;
+}
+
+.company_title {
+	margin-left: 20px;
+	width: 75%;
+	line-height: 50px;
+
+	:first-child{
+		font-weight: bold;
+	}
+}
+
+.button {
+	// display: flex;
+	// justify-content: flex-end;
+}
+
+.button_save span,
+.button_apply span {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.button_apply Button,
+.button_save Button {
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+.content{
+	width: 100%;
+	display: flex;
+	background: #ffffff;
+}
+
+.recruitment_content{
+	width: 70%;
+	padding: 20px;
+	text-align: justify;
+	color: #333;
+}
+
+.category{
+	width: 30%;
+	padding: 20px;
+}
+
+.content_recruitment span{
+	white-space: pre-wrap;
+}
+
+.media {
+	width: 80%;
+	height: 400px;
+	object-fit: contain;
+	margin-bottom: 40px;
+}
+

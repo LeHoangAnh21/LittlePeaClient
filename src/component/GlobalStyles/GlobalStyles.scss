@@ -1,0 +1,20 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+
+:root {
+	--primary-color: #fe2c55;
+	--black: #000;
+	--text-color: #333;
+	--white: #fff;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	overflow-y: overlay;
+}

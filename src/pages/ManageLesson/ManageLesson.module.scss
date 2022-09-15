@@ -1,0 +1,48 @@
+.body {
+	display: flex;
+	margin: 50px 20px;
+}
+
+.list_lessons {
+	padding-right: 20px;
+	width: 75%;
+}
+
+.empty {
+	padding: 10px 10px 20px 20px;
+	width: 25%;
+}
+
+.title_course {
+	font-size: 3rem;
+	font-weight: bold;
+	color: #333;
+}
+
+.intro {
+	width: 80%;
+	padding-bottom: 20px;
+}
+
+.description_course {
+	text-align: justify;
+	line-height: 1.8;
+	color: #333;
+	font-weight: 500;
+	text-indent: 30px;
+}
+
+.option {
+	display: flex;
+	align-items: center;
+	background-color: #ededed;
+	padding: 10px 15px;
+	border-radius: 30px;
+	margin-bottom: 15px;
+}
+
+.add-test {
+	width: 160px;
+	margin: 0 10px;
+	font-weight: 500;
+}

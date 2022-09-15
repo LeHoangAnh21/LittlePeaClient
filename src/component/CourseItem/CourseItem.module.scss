@@ -1,0 +1,90 @@
+
+.course_item{
+	margin: 15px 30px 40px 0;
+	background-color: white;
+	box-shadow: 1px 2px 5px;
+	border-radius: 20px;
+	border-bottom: 15px solid #d5e9e4 ;
+}
+
+.course_item:hover{
+	border-color: #78c2ad;
+	transition: .3s linear;
+
+	.button_learn{
+		opacity: 1;
+		visibility: visible;
+		transform: translate(0%, 0%);
+		font-weight: 900;
+	}
+
+	.course_avatar{
+		opacity: 0.7;
+		transition: .22s linear;
+	}
+}
+
+.course_avatar{
+	position: relative;
+}
+
+.media{
+	position: relative;
+	display: flex;
+	height: 170px;
+	width: 300px;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.button_learn{
+	position: absolute;
+	top: 38%;
+	left: 31%;
+	opacity: 0;
+	visibility: hidden;
+	transform: translate(0%, 100%);
+	transition: all .2s ease;
+}
+
+.body-courseItem{
+	width: 300px;
+}
+
+.title-link{
+	text-decoration: none;
+}
+
+.title{
+	font-weight: bold;
+	margin: 15px 0 10px 10px;
+	cursor: pointer;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.title:hover{
+	color: #16926f;
+	transition: .3s linear;
+}
+
+.category{
+	font-weight: bold;
+	margin: 0 0 15px 15px;
+}
+
+.creator{
+
+	margin: 10px;
+
+	img{
+		width: 40px;
+		border-radius: 50%;
+		margin-right: 20px;
+	}
+
+	span{
+		font-weight: bold;
+	}
+}

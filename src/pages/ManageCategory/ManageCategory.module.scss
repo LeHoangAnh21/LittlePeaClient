@@ -1,0 +1,30 @@
+.table{
+	border: 3px;
+	color: #333;
+}
+
+.col_title{
+	width: 20%;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.col_category{
+	width: 65%;
+	text-align: justify;
+	padding: 10px;
+}
+
+.col_options {
+	width: 15%;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.btn-floating {
+	position: fixed;
+	bottom: 80px;
+	right: 100px;
+}

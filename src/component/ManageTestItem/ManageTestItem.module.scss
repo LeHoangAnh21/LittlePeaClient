@@ -1,0 +1,59 @@
+.test-item {
+	padding: 20px 10px 0 40px;
+}
+
+.title {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: #333;
+	background: #f4f1f1;
+	padding: 10px;
+	border-radius: 12px;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+}
+
+.title-header {
+	display: flex;
+	top: 0;
+	bottom: 0;
+	margin-top: auto;
+	margin-bottom: auto;
+	width: 80%;
+}
+
+.title-footer{
+	width: 20%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.title span {
+	padding-left: 10px;
+}
+
+.description {
+	padding: 10px 20px;
+	text-align: justify;
+	line-height: 1.8;
+	font-weight: 500;
+	text-indent: 30px;
+}
+
+.video iframe {
+	padding: 10px 20px;
+	width: 100%;
+}
+
+.icon {
+	padding-bottom: 4px;
+}
+
+.hidden {
+	display: none;
+}
+
+.button_edit {
+	margin-right: 7px;
+}

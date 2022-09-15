@@ -1,0 +1,63 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	height: 70px;
+	border-bottom: 1px solid #333;
+	padding: 0 40px;
+	position: sticky;
+	left: 0;
+	right: 0;
+	top: 0;
+	background-color: #ffffff;
+	z-index: 100;
+}
+
+.btn-floating {
+	width: 20%
+}
+
+.logo{
+	width: 10%;
+	height: 100%;
+}
+
+.slogan{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	background: linear-gradient(to right, #feb5c2, #7ce8a3, #7ba9e3);
+	background-clip: text;
+	color: transparent;
+	font-size: 2rem;
+	animation: typing 8s steps(37) infinite;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+@keyframes typing {
+
+	0%,
+	100% {
+		width: 0%;
+	}
+
+	70%,
+	90% {
+		width: 90%;
+	}
+}
+
+.button{
+	display: flex;
+	justify-content: center;
+	align-items: center;	
+}
+
+.button-register,
+.button-login{
+	width: 100px;
+	margin: 0 10px;
+	font-weight: 500;
+}

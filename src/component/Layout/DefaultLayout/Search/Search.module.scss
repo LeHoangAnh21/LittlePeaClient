@@ -1,0 +1,24 @@
+.search{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.search-component{
+	padding: 7px 15px;
+	border-radius: 20px;
+	border: 1px solid #c4c3c3;
+
+	&:focus-within {
+			border: 1.5px solid rgba(22, 24, 35, 0.2);
+		}
+}
+
+.input{
+	border: none;
+	outline: none;
+}
+
+// .input:focus ~ .search-component{
+// 	border: 1px solid #373737;
+// }

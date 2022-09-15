@@ -1,0 +1,99 @@
+.blog_detail{
+	width: 100%;
+	display: flex;
+	height: 100%;
+	margin-bottom: 50px;
+}
+
+.info{
+	width: 25%;
+	padding: 30px;
+}
+
+.blogger {
+
+	width: 100%;
+	padding-bottom: 35px;
+	border-bottom: 1px solid rgb(204, 201, 201);
+
+	img {
+		width: 40px;
+		border-radius: 50%;
+		margin-right: 20px;
+	}
+
+	span {
+		font-weight: bold;
+	}
+}
+
+.react{
+	width: 100%;
+	display: flex;
+	margin-top: 30px;
+}
+
+.react_tym{
+	margin-right: 50px;
+}
+
+.react_tym svg{
+	// color: red;
+	font-size: 2rem;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.react_tym span{
+	font-weight: bold;
+}
+
+.react_comment svg{
+	font-size: 2rem;
+	cursor: pointer;
+}
+
+.tym{
+	color: red;
+}
+
+.intro{
+	width: 74%;
+	padding: 10px;
+	display: flex;
+}
+
+.blog_content{
+	width: 80%;
+}
+
+.title_blog{
+	font-size: 3rem;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 20px;
+	display: flex;
+	text-align: justify;
+}
+
+.media{
+	width: 80%;
+	height: 400px;
+	object-fit: contain;
+	margin-bottom: 40px;
+}
+
+.content_blog{
+	text-align: justify;
+	text-indent: 30px;
+	line-height: 2;
+	color: #292929;
+	font-size: 1.2rem;
+	white-space: pre-line;
+}
+
+.manage{
+	width: 20%;
+	padding: 30px 10px;
+}
+
