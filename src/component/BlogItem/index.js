@@ -1,7 +1,8 @@
 // import { Fragment } from 'react'
 import { CategoryContext } from '~/actions/context/CategoryContext';
 import { BlogContext } from '~/actions/context/BlogContext';
-import { useContext } from 'react';
+import { UserContext } from '~/actions/context/UserContext';
+import { useContext, useEffect } from 'react';
 import { CardMedia } from "@material-ui/core";
 import classNames from "classnames/bind";
 import { Fragment } from 'react';
@@ -17,24 +18,17 @@ const cx = classNames.bind(styles)
 function BlogItem({ data }) {
 
 	const {
-		categoryState: { categories },
-	} = useContext(CategoryContext)
+		userState: { users },
+		getUser
+	} = useContext(UserContext)
+
+	useEffect(() => {
+		getUser()
+	}, [])
 
 	const {
-		findBlogId,
-		setShowUpdateBlogModal,
-		setShowDeleteBlogModal,
-	} = useContext(BlogContext)
-
-	const chooseBlog = blogId => {
-		findBlogId(blogId)
-		setShowUpdateBlogModal(true)
-	}
-
-	const deleteBlog = blogId => {
-		findBlogId(blogId)
-		setShowDeleteBlogModal(true)
-	}
+		categoryState: { categories },
+	} = useContext(CategoryContext)
 
 	//Cal Day
 	const get_day_of_time = (d1, d2) => {
@@ -96,16 +90,6 @@ function BlogItem({ data }) {
 						<Link to={`/blog/${data._id}`} className={cx('button_learn')}>
 							<h5 className={cx('title')}>{data.title}</h5>
 						</Link>
-
-						<div className={cx('button')}>
-							<Button className={cx('button_edit')} onClick={chooseBlog.bind(this, data._id)}>
-								<EditIcon />
-							</Button>
-					
-							<Button className={cx('button_delete')} onClick={deleteBlog.bind(this, data._id)}>
-								<DeleteIcon />
-							</Button>
-						</div>
 					</div>
 
 					<p className={cx('content')}>{data.content}</p>
@@ -125,8 +109,22 @@ function BlogItem({ data }) {
 				</div>
 
 				<div className={cx('blogger')}>
-					<img src={images.founder} alt="" />
-					<span>Le Hoang Anh</span>
+					{users.map((user) => {
+						if (user._id === data.user) {
+							return (
+								<Fragment>
+									{!user.avatar ?
+										<img src={images.avatarDefault} alt="" className={cx('blogger-avatar')} />
+										: <CardMedia image={user.avatar} title='avatar' className={cx('blogger-avatar')} />
+									}
+									{!user.fullname ?
+										<span className={cx('blogger-fullname')}>{user.role}</span>
+										: <span className={cx('blogger-fullname')}>{user.fullname}</span>
+									}
+								</Fragment>
+							)
+						}
+					})}
 				</div>
 			</div>
 

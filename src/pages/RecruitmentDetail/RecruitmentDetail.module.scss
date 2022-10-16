@@ -62,9 +62,10 @@
 	color: #333;
 }
 
-.category{
+.recruitment-another{
 	width: 30%;
 	padding: 20px;
+	border-left: solid 1px rgb(183, 177, 177);
 }
 
 .content_recruitment span{
@@ -77,4 +78,25 @@
 	object-fit: contain;
 	margin-bottom: 40px;
 }
+
+.salary{
+	display: flex;
+	margin: 20px 0;
+}
+
+.salary-icon{
+	margin: 6.5px 0;
+}
+
+.salary-item{
+	display: flex;
+	flex-direction: column;
+	margin-left: 20px;
+
+	:first-child{
+		font-weight: bold;
+		font-size: 1.2rem;
+	}
+}
+
 

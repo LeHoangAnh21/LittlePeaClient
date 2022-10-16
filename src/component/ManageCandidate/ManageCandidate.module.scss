@@ -1,0 +1,131 @@
+.application_item {
+	margin: 15px 30px 40px 0;
+	background-color: white;
+	box-shadow: 1px 2px 5px;
+	border-radius: 20px;
+	border-bottom: 15px solid #d5e9e4;
+}
+
+.application_item:hover {
+	border-color: #78c2ad;
+	transition: .3s linear;
+
+	.button_learn {
+		opacity: 1;
+		visibility: visible;
+		transform: translate(0%, 0%);
+		font-weight: 900;
+	}
+
+	.button_delete,
+	.button_edit {
+		opacity: 1;
+		visibility: visible;
+		transform: translate(0%, 100%);
+	}
+
+	.application_avatar {
+		opacity: 0.7;
+		transition: .22s linear;
+	}
+}
+
+.application_avatar {
+	position: relative;
+}
+
+.media {
+	position: relative;
+	display: flex;
+	height: 170px;
+	width: 300px;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.button_learn {
+	position: absolute;
+	top: 38%;
+	left: 31%;
+	opacity: 0;
+	visibility: hidden;
+	transform: translate(0%, 100%);
+	transition: all .2s ease;
+}
+
+.button_edit,
+.button_delete {
+	position: absolute;
+	font-weight: bold;
+	opacity: 0;
+	visibility: hidden;
+	transition: all .2s ease;
+}
+
+.button_edit {
+	top: -16%;
+	left: 60%;
+	transform: translate(0%, 200%);
+}
+
+.button_delete {
+	top: -16%;
+	left: 79%;
+	transform: translate(0%, 200%);
+}
+
+.body-recruitItem {
+	width: 300px;
+	margin: 20px 0;
+}
+
+.title {
+	font-weight: bold;
+	margin: 15px 0 20px 10px;
+	cursor: pointer;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.title:hover {
+	color: #16926f;
+	transition: .3s linear;
+}
+
+.link {
+	text-decoration: none;
+}
+
+.location,
+.salary,
+.category {
+	font-weight: bold;
+	margin: 0 0 15px 15px;
+	color: #333;
+	background: #e8ebed;
+	padding: 7px 10px;
+	border-radius: 20px;
+	display: inline-flex;
+	flex-wrap: wrap;
+}
+
+.candidate {
+
+	display: flex;
+	margin: 10px;
+
+}
+
+.candidate-avatar {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.candidate-fullname {
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+}

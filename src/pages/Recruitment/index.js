@@ -4,17 +4,21 @@ import { useEffect, useContext } from 'react';
 import { RecruitmentContext } from '~/actions/context/RecruitmentContext';
 import RecruitmentItem from '~/component/RecruitmentItem';
 import AddRecruitmentModal from './AddPost';
-import UpdateRecruitmentModal from './UpdatePost';
 import { Fragment } from 'react';
 import Button from 'react-bootstrap/Button';
 import AddIcon from '@material-ui/icons/Add';
 import classNames from 'classnames/bind';
 import styles from './Recruitment.module.scss'
-import DeleteRecruitmentModal from './DeleteRecruitment';
+import { AuthContext } from '~/actions/context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles)
 
 function Recruitment() {
+
+	const {
+		authState: { user: { role } },
+	} = useContext(AuthContext)
 
 	const {
 		recruitmentState: { recruitment, recruitments, recruitmentsLoading },
@@ -47,22 +51,40 @@ function Recruitment() {
 
 			<p className={cx('header_recruitments')}>RECRUITMENT</p>
 
+			{role !== 'student' &&
+				<div className={cx('option')}>
+
+					<Link to={`/manage-recruitment`} className={cx('button_learn')}>
+						<Button variant="success">
+							Manage Post
+						</Button>
+					</Link>
+
+					<Link to={`/list-candidate`} className={cx('button_learn')}>
+						<Button variant="info">
+							List Candidate
+						</Button>
+					</Link>
+
+				</div>
+			}
+
 			{body}
 
-			<Fragment>
-				<Button
-					className={cx('btn-floating')}
-					onClick={setShowAddRecruitmentModal.bind(this, true)}
-				>
-					<AddIcon />
-				</Button>
-			</Fragment>
-
-			<AddRecruitmentModal />
-
-			{recruitment !== null && <UpdateRecruitmentModal />}
-
-			{recruitment !== null && <DeleteRecruitmentModal />}
+			{role !== 'student' && 
+				<Fragment>
+					<Fragment>
+						<Button
+							className={cx('btn-floating')}
+							onClick={setShowAddRecruitmentModal.bind(this, true)}
+						>
+							<AddIcon />
+						</Button>
+					</Fragment>
+		
+					<AddRecruitmentModal />
+				</Fragment>
+			}
 
 		</div>
 	);

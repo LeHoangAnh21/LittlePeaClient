@@ -7,7 +7,8 @@ import {
 	ADD_BLOG,
 	DELETE_BLOG,
 	UPDATE_BLOG,
-	FIND_BLOG_ID
+	FIND_BLOG_ID,
+	LIKE_BLOG
 } from './constant';
 
 export const BlogContext = createContext()
@@ -79,6 +80,17 @@ const BlogContextProvider = ({ children }) => {
 		}
 	}
 
+	const likeBlog = async blogId => {
+		try{
+			const response = await axios.put(`${apiURL}/blog/${blogId}/like`);
+			if(response.data.success){
+				dispatch({ type: LIKE_BLOG, payload: response.data.blog })
+			}
+		} catch (error) {
+			console.log(error.message);
+		}
+	}
+
 	const [showAddBlogModal, setShowAddBlogModal] = useState(false);
 	const [showDeleteBlogModal, setShowDeleteBlogModal] = useState(false);
 	const [showUpdateBlogModal, setShowUpdateBlogModal] = useState(false);
@@ -97,8 +109,7 @@ const BlogContextProvider = ({ children }) => {
 		findBlogId,
 		showUpdateBlogModal,
 		setShowUpdateBlogModal,
-		setViewBlogId,
-		viewBlogId,
+		likeBlog,
 	}
 
 	return (

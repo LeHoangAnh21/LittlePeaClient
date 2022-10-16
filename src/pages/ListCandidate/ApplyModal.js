@@ -55,7 +55,7 @@ const ApplyModal = ({ data }) => {
 
 						<Form.Control
 							type='text'
-							placeholder='Title (*Required)'
+							placeholder='Fullname'
 							name='name'
 							required
 							aria-describedby='title-help'
@@ -91,12 +91,11 @@ const ApplyModal = ({ data }) => {
 
 					</Form.Group><br /><br />
 
-					<Form.Group>
+					<Form.Group style={{ display: 'none' }}>
 
 						<Form.Control
 							type='text'
 							name='recruitment'
-							required
 							aria-describedby='title-help'
 							value={recruitment}
 							onChange={onChangeNewApplication}

@@ -4,9 +4,8 @@ import { userReducer } from '~/actions/reducers/userReducer'
 import axios from 'axios';
 import {
 	GET_USER,
-	ADD_USER,
 	DELETE_USER,
-	UPDATE_USER,
+	// UPDATE_BLOG,
 	FIND_USER_ID
 } from './constant';
 
@@ -33,72 +32,49 @@ const UserContextProvider = ({ children }) => {
 		}
 	}
 
-	//Add user
-	const addUser = async newUser => {
-		try {
-			const response = await axios.post(`${apiURL}/user/create`, newUser)
+	// //Find User id
+	// const findUserId = userId => {
+	// 	const user = userState.users.find(user => user._id === userId)
+	// 	dispatch({ type: FIND_USER_ID, payload: user })
+	// }
 
-			if (response.data.success) {
-				dispatch({ type: ADD_USER, payload: response.data.user })
-				return response.data;
-			}
-		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
-		}
+	// //Delete user
+	// const deleteUser = async userId => {
+	// 	try {
+	// 		const response = await axios.delete(`${apiURL}/user/${userId}`)
+	// 		if (response.data.success) {
+	// 			dispatch({ type: DELETE_USER, payload: userId })
+	// 		}
+	// 	} catch (err) {
+	// 		console.log(err)
+	// 	}
+	// }
 
-	}
+	// //Update Blog
+	// const updateBlog = async updatedBlog => {
+	// 	try {
+	// 		const response = await axios.put(`${apiURL}/blog/${updatedBlog._id}`, updatedBlog)
+	// 		if (response.data.success) {
+	// 			dispatch({ type: UPDATE_BLOG, payload: response.data.blog })
+	// 			return response.data
+	// 		}
+	// 	} catch (err) {
+	// 		return err.response.data ? err.response.data : { success: false, message: 'server error' }
+	// 	}
+	// }
 
-	//Find User id
-	const findUserId = userId => {
-		const user = userState.users.find(user => user._id === userId)
-		dispatch({ type: FIND_USER_ID, payload: user })
-	}
-
-	//Delete User
-	const deleteUser = async userId => {
-		try {
-			const response = await axios.delete(`${apiURL}/user/${userId}`)
-			if (response.data.success) {
-				dispatch({ type: DELETE_USER, payload: userId })
-			}
-		} catch (err) {
-			console.log(err)
-		}
-	}
-
-	//Update User
-	const updateUser = async updatedUser => {
-		try {
-			const response = await axios.put(`${apiURL}/user/${updatedUser._id}`, updatedUser)
-			if (response.data.success) {
-				dispatch({ type: UPDATE_USER, payload: response.data.user })
-				return response.data
-			}
-		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
-		}
-	}
-
-	const [showAddUserModal, setShowAddUserModal] = useState(false);
-	const [showDeleteUserModal, setShowDeleteUserModal] = useState(false);
-	const [showUpdateUserModal, setShowUpdateUserModal] = useState(false);
-	const [viewUserId, setViewUserId] = useState('');
+	// const [showDeleteBlogModal, setShowDeleteBlogModal] = useState(false);
+	// const [showUpdateBlogModal, setShowUpdateBlogModal] = useState(false);
 
 	const userContextData = {
 		userState,
 		getUser,
-		showAddUserModal,
-		setShowAddUserModal,
-		addUser,
-		deleteUser,
-		showDeleteUserModal,
-		setShowDeleteUserModal,
-		updateUser,
-		findUserId,
-		showUpdateUserModal,
-		setShowUpdateUserModal,
-		setViewUserId,
-		viewUserId,
+		// deleteBlog,
+		// showDeleteBlogModal,
+		// setShowDeleteBlogModal,
+		// findBlogId,
+		// showUpdateBlogModal,
+		// setShowUpdateBlogModal,
 	}
 
 	return (

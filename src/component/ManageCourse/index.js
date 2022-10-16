@@ -1,7 +1,7 @@
 // import { Fragment } from 'react'
 import { CourseContext } from '~/actions/context/CourseContext';
 import { CategoryContext } from '~/actions/context/CategoryContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { CardMedia } from "@material-ui/core";
 import classNames from "classnames/bind";
 import { Fragment } from 'react';
@@ -17,7 +17,12 @@ function ManageCourse({ data }) {
 
 	const {
 		categoryState: { categories },
+		getCategories,
 	} = useContext(CategoryContext)
+
+	useEffect(() => {
+		getCategories()
+	}, [])
 
 	const {
 		findCourseId,
@@ -56,9 +61,9 @@ function ManageCourse({ data }) {
 					</Button>
 				</div>
 
-				<p className={cx('body-courseItem')}>
+				<div className={cx('body-courseItem')}>
 					<h5 className={cx('title')}>{data.name}</h5>
-					<p className={cx('category')}>
+					<div className={cx('category')}>
 						{categories.map((category) => {
 							let categoryTitle = null
 							if (category._id === data.category) {
@@ -66,8 +71,8 @@ function ManageCourse({ data }) {
 							}
 							return categoryTitle
 						})}
-					</p>
-				</p>
+					</div>
+				</div>
 			</div>
 
 		</Fragment>

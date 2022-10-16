@@ -1,20 +1,20 @@
 import { CardMedia } from '@material-ui/core';
-import { UserContext } from '~/actions/context/UserContext';
 import { useContext } from 'react';
 import classNames from 'classnames/bind';
 import { Button } from 'react-bootstrap';
 import styles from './HeaderIntro.module.scss'
 import images from '~/assets/images'
-import AddUserModal from '~/pages/ManageUser/AddUser';
 import Image from '~/component/Image/Image';
+import { AuthContext } from '~/actions/context/AuthContext'
 
 const cx = classNames.bind(styles)
 
 function HeaderIntro() {
 
 	const {
-		setShowAddUserModal,
-	} = useContext(UserContext)
+		setShowRegisterModal,
+		setShowLoginModal,
+	} = useContext(AuthContext)
 
 	return ( 
 		<div className={cx('header')}>
@@ -25,15 +25,13 @@ function HeaderIntro() {
 			</div>
 
 			<div className={cx('button')}>
-				<Button className={cx('button-login')}>
+				<Button className={cx('button-login')} onClick={setShowLoginModal.bind(this, true)}>
 					Login
 				</Button>
-				<Button className={cx('button-register')} color="warning" onClick={setShowAddUserModal.bind(this, true)}>
+				<Button className={cx('button-register')} color="warning" onClick={setShowRegisterModal.bind(this, true)}>
 					Register
 				</Button>
 			</div>
-
-			<AddUserModal />
 		</div>
 	);
 }

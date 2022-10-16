@@ -1,22 +1,42 @@
 import { RecruitmentContext } from '~/actions/context/RecruitmentContext';
 import { ApplicationContext } from '~/actions/context/ApplicationContext'
+import { CategoryContext } from '~/actions/context/CategoryContext';
+import { AuthContext } from '~/actions/context/AuthContext';
 import { Fragment, useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './RecruitmentDetail.module.scss'
 import { useParams } from 'react-router-dom';
 import { CardMedia } from '@material-ui/core';
 import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms';
-import AlbumIcon from '@material-ui/icons/Album';
+import CategoryIcon from '@material-ui/icons/Category';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import GroupIcon from '@material-ui/icons/Group';
+import WorkIcon from '@material-ui/icons/Work';
 import { Button } from 'react-bootstrap';
-import ApplyModal from '../Application/ApplyModal';
+import ApplyModal from '../ListCandidate/ApplyModal';
+import images from '~/assets/images';
 
 const cx = classNames.bind(styles)
 
 function RecruitmentDetail() {
 
 	const {
+		authState: { user: { _id } },
+	} = useContext(AuthContext)
+
+	const {
 		setShowAddApplicationModal,
 	} = useContext(ApplicationContext)
+
+	const {
+		categoryState: { categories },
+		getCategories
+	} = useContext(CategoryContext)
+
+	useEffect(() => {
+		getCategories()
+	}, [])
 
 	const { id } = useParams();
 
@@ -39,33 +59,42 @@ function RecruitmentDetail() {
 			<Fragment>
 				{recruitments.map((recruitment) => {
 					if (recruitmentId === recruitment._id) {
+						const deadlineDay = new Date(recruitment.deadline)
+						let day = deadlineDay.getDate()
+						let month = deadlineDay.getMonth()
+						let year = deadlineDay.getFullYear()
 						return (
 							<div>
 								<div className={cx('company_info')}>
 									<div className={cx('company_avatar')}>
-										{recruitment.image !== '' && <CardMedia image={recruitment.image || ''} title='Title' className={cx('avatar')} />}
+										{!recruitment.avatarCompany ?
+											<img src={images.defaultCompanyImage} alt="" title='Company Image' className={cx('avatar')} />
+											: <CardMedia image={recruitment.avatarCompany} title='avatar' className={cx('avatar')} />
+										}
 									</div>
 									<div className={cx('company_title')}>
 										<h3>{recruitment.title}</h3>
-										<h4>Công ty TNHH Giải pháp Phần Mềm Ánh Sáng</h4>
+										<h4>{recruitment.company}</h4>
 										<span>
 											<AccessAlarmsIcon />
 											&nbsp;
-											Hạn nộp hồ sơ: 02/09/2022
+											Application deadline: {day} / {month} / {year}
 										</span>
 									</div>
-									<div className={cx('button')}>
-										<div className={cx('button_apply')}>
-											<Button onClick={setShowAddApplicationModal.bind(this, true)}>
-												<span>Apply Now</span>
-											</Button>
+									{recruitment.user !== _id &&
+										<div className={cx('button')}>
+											<div className={cx('button_apply')}>
+												<Button onClick={setShowAddApplicationModal.bind(this, true)}>
+													<span>Apply Now</span>
+												</Button>
+											</div>
+											<div className={cx('button_save')}>
+												<Button variant="outline-primary">
+													<span>Save</span>
+												</Button>
+											</div>
 										</div>
-										<div className={cx('button_save')}>
-											<Button variant="outline-primary">
-												<span>Save</span>
-											</Button>
-										</div>
-									</div>
+									}
 								</div>
 
 								<div className={cx('content')}>
@@ -73,28 +102,74 @@ function RecruitmentDetail() {
 
 										<div className={cx('content_recruitment')}>
 											<h2>Job Description</h2>
-											<span>{recruitment.content || 'None'}</span>
+											<span>{recruitment.jobDescription || 'None'}</span>
 										</div>
 										<br /> <br />
 
 										<div className={cx('content_recruitment')}>
 											<h2>Requirements for Applicants</h2>
-											<span>{recruitment.content || 'None'}</span>
+											<span>{recruitment.requirementsCandidates || 'None'}</span>
 										</div>
 										<br /> <br />
 
 										<div className={cx('content_recruitment')}>
 											<h2>Benefits for Candidates</h2>
-											<span>{recruitment.content || 'None'}</span>
+											<span>{recruitment.benefitsCandidates || 'None'}</span>
 										</div>
 										<br /> <br />
 
 										{recruitment.image !== '' && <CardMedia image={recruitment.image || ''} title='Title' className={cx('media')} />}
-	
+
 									</div>
-	
-									<div className={cx('category')}>
-										hello
+
+									<div className={cx('recruitment-another')}>
+										<div className={cx('salary')}>
+											<MonetizationOnIcon fontSize="large" className={cx('salary-icon')} />
+											<div className={cx('salary-item')}>
+												<span>Salary</span>
+												<span>{recruitment.salary}</span>
+											</div>
+										</div>
+
+										<div className={cx('salary')}>
+											<GroupIcon fontSize="large" className={cx('salary-icon')} />
+											<div className={cx('salary-item')}>
+												<span>Number of recruiting</span>
+												<span>{recruitment.numberRecruiting}</span>
+											</div>
+										</div>
+
+										<div className={cx('salary')}>
+											<WorkIcon fontSize="large" className={cx('salary-icon')} />
+											<div className={cx('salary-item')}>
+												<span>Experience</span>
+												<span>{recruitment.experience}</span>
+											</div>
+										</div>
+
+										<div className={cx('salary')}>
+											<CategoryIcon fontSize="large" className={cx('salary-icon')} />
+											<div className={cx('salary-item')}>
+												<span>Category</span>
+												<span>
+													{categories.map((category) => {
+														let categoryTitle = null
+														if (category._id === recruitment.category) {
+															categoryTitle = category.title
+														}
+														return categoryTitle
+													})}
+												</span>
+											</div>
+										</div>
+
+										<div className={cx('salary')}>
+											<LocationOnIcon fontSize="large" className={cx('salary-icon')} />
+											<div className={cx('salary-item')}>
+												<span>Location</span>
+												<span>{recruitment.location}</span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

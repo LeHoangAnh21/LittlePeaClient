@@ -5,19 +5,18 @@ import { BlogContext } from '~/actions/context/BlogContext';
 import BlogItem from '~/component/BlogItem';
 import AddBlogModal from './AddBlog';
 import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import AddIcon from '@material-ui/icons/Add';
 import classNames from 'classnames/bind';
 import styles from './Blog.module.scss'
-import UpdateBlogModal from './UpdateBlog';
-import DeleteBlogModal from './DeleteBlog';
 
 const cx = classNames.bind(styles)
 
 function Blog() {
 
 	const {
-		blogState: { blog, blogs, blogsLoading },
+		blogState: { blogs },
 		setShowAddBlogModal,
 		getBlog,
 	} = useContext(BlogContext)
@@ -30,7 +29,7 @@ function Blog() {
 
 	if (blogs.length === 0) {
 		body = (
-			<h1>No blog posted.</h1>
+			<h4>No blog posted.</h4>
 		)
 	} else {
 		body = (
@@ -45,7 +44,16 @@ function Blog() {
 	return (
 		<div className={cx('blog_body')}>
 
-			<p className={cx('header_blogs')}>LIST BLOG</p>
+			<h1 className={cx('header_blogs')}>LIST BLOG</h1>
+
+			<div className={cx('option')}>
+
+				<Link to={`/manage-blog`} className={cx('button_learn')}>
+					<Button variant="success">
+						Manage your blog
+					</Button>
+				</Link>
+			</div>
 
 			{body}
 
@@ -59,10 +67,6 @@ function Blog() {
 			</Fragment>
 
 			<AddBlogModal />
-
-			{blog !== null && <UpdateBlogModal />}
-
-			{blog !== null && <DeleteBlogModal />}
 		</div>
 	);
 }

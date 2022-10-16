@@ -57,3 +57,60 @@
 .button_edit {
 	margin-right: 7px;
 }
+
+.delete{
+	display: block;
+}
+
+.question-component{
+	display: flex;
+	flex-direction: column;
+	// width: 100%;
+	background-color: rgb(154, 154, 154);
+	color: white;
+	padding: 20px;
+	border-radius: 30px;
+	margin: 20px 0;
+}
+
+.question-header{
+	display: flex;
+	justify-content: space-between;
+}
+
+.question-number{
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+
+.question{
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	font-size: 1.2rem;
+}
+
+.answer{
+	list-style: none;
+	margin-top: 20px;
+	padding: 0;
+}
+
+.answer-item-component{
+	display: flex;
+	flex-direction: column;
+}
+
+.answer-item{
+	border: 1px solid #ffff;
+	margin: 10px 0;
+	display: flex;
+	justify-content: center;
+	padding: 10px 0;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.answer-item:hover{
+	background-color: #ffa500;
+}

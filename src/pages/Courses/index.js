@@ -3,6 +3,7 @@
 import { useEffect, useContext } from 'react';
 import { CourseContext } from '~/actions/context/CourseContext';
 import { LessonContext } from '~/actions/context/LessonContext';
+import { AuthContext } from '~/actions/context/AuthContext';
 import CourseItem from '~/component/CourseItem';
 import AddCourseModal from './AddCourse';
 import classNames from 'classnames/bind';
@@ -17,8 +18,8 @@ const cx = classNames.bind(styles)
 function Courses() {
 
 	const {
-		setShowAddLessonModal,
-	} = useContext(LessonContext)
+		authState: { user: {role} },
+	} = useContext(AuthContext)
 
 	const {
 		courseState: { course, courses, coursesLoading },
@@ -48,37 +49,35 @@ function Courses() {
 			<div>
 				<p className={cx('header_courses')}>LIST COURSES</p>
 
-				<div className={cx('option')}>
+				{role === 'creator' &&
+					<div className={cx('option')}>
 
-					<Button
-						className={cx('add-lesson')}
-						onClick={setShowAddLessonModal.bind(this, true)}
-					>
-						Add Lesson
-					</Button>
+						<Link to={`/manage`} className={cx('button_learn')}>
+							<Button variant="success">
+								Manage Course
+							</Button>
+						</Link>
 
-					<Link to={`/manage`} className={cx('button_learn')}>
-						<Button variant="success">
-							Manage Course
-						</Button>
-					</Link>
-
-				</div>
+					</div>
+				}
 			</div>
 
 
 			{body}
-
-			<Fragment>
-				<Button
-					className={cx('btn-floating')}
-					onClick={setShowAddCourseModal.bind(this, true)}
-				>
-					<AddIcon />
-				</Button>
-			</Fragment>
-
-			<AddCourseModal />
+			{role === 'creator' && 
+				<Fragment>
+					<Fragment>
+						<Button
+							className={cx('btn-floating')}
+							onClick={setShowAddCourseModal.bind(this, true)}
+						>
+							<AddIcon />
+						</Button>
+					</Fragment>
+	
+					<AddCourseModal />
+				</Fragment>
+			}
 		</div>
 	);
 }

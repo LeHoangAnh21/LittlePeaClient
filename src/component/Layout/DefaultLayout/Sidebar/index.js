@@ -1,63 +1,75 @@
 import classNames from 'classnames/bind';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './Sidebar.module.scss'
 import HomeIcon from '@material-ui/icons/Home';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
+import CategoryIcon from '@material-ui/icons/Category';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import WorkIcon from '@material-ui/icons/Work';
-
+import { useContext } from 'react';
+import { AuthContext } from '~/actions/context/AuthContext';
 
 const cx = classNames.bind(styles);
 
-const sidebarItem = document.querySelectorAll('.button')
+// // sidebarItem.forEach((btn) => {
+// // 	btn.addEventListener('click', (e) => {
+// // 		btn.classList.add('active')
+// // 	})
+// // })
 
-console.log(sidebarItem);
-
-// sidebarItem.forEach((btn) => {
-// 	btn.addEventListener('click', (e) => {
-// 		btn.classList.add('active')
+// const handleActive = (e) => {
+// 	sidebarItem.forEach((btn) => {
+// 		console.log(btn.target);
+// 		btn.classList.remove(cx('active'));
 // 	})
-// })
-
-const handleActive = (e) => {
-	sidebarItem.forEach((btn) => {
-		console.log(btn.target);
-		btn.classList.remove(cx('active'));
-	})
-	e.target.classList.add(cx('active'));
-}
+// 	e.target.classList.add(cx('active'));
+// }
 
 function Sidebar() {
+
+	const {
+		authState: { user: { role } },
+	} = useContext(AuthContext)
+
 	return (
 		<div className={cx('sidebar')}>
 			<ul className={cx('list')}>
 				<li>
-					<Link to={`/home`} className={cx('sidebar-item', 'button', 'active')} onClick={handleActive}>
+					<NavLink to={`/home`} className={(nav) => cx('sidebar-item', {active: nav.isActive})}>
 						<HomeIcon />
 						<span>Home</span>
-					</Link>
+					</NavLink>
 				</li>
 
 				<li>
-					<Link to={`/courses`} className={cx('sidebar-item', 'button')} onClick={handleActive}>
+					<NavLink to={`/courses`} className={(nav) => cx('sidebar-item', { active: nav.isActive })}>
 						<MenuBookIcon />
 						<span>Courses</span>
-					</Link>
+					</NavLink>
 				</li>
 
 				<li>
-					<Link to={`/blog`} className={cx('sidebar-item', 'button')} onClick={handleActive}>
+					<NavLink to={`/blog`} className={(nav) => cx('sidebar-item', { active: nav.isActive })}>
 						<QuestionAnswerIcon />
 						<span>Blog</span>
-					</Link>
+					</NavLink>
 				</li>
 
 				<li>
-					<Link to={`/recruitment`} className={cx('sidebar-item', 'button')} onClick={handleActive}>
+					<NavLink to={`/recruitment`} className={(nav) => cx('sidebar-item', { active: nav.isActive })}>
 						<WorkIcon />
 						<span>Recruitment</span>
-					</Link>
+					</NavLink>
 				</li>
+
+				{role === 'admin' &&
+					<li>
+						<NavLink to={`/category`} className={(nav) => cx('sidebar-item', { active: nav.isActive })}>
+							<CategoryIcon />
+							<span>Category</span>
+						</NavLink>
+					</li>
+				}
 			</ul>
 		</div>
 	);

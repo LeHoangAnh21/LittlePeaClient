@@ -2,7 +2,6 @@ import {
 	GET_APPLICATION,
 	ADD_APPLICATION,
 	DELETE_APPLICATION,
-	UPDATE_APPLICATION,
 	FIND_APPLICATION_ID
 } from "../context/constant";
 
@@ -25,13 +24,6 @@ export const applicationReducer = (state, action) => {
 			return {
 				...state,
 				application: payload
-			}
-		case UPDATE_APPLICATION:
-			const updateApplication = state.applications.map(application => application._id === payload._id ? payload : application)
-			
-			return {
-				...state,
-				applications: updateApplication
 			}
 		case DELETE_APPLICATION:
 			return {

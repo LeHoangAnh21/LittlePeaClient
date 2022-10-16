@@ -6,7 +6,6 @@ import {
 	GET_APPLICATION,
 	ADD_APPLICATION,
 	DELETE_APPLICATION,
-	UPDATE_APPLICATION,
 	FIND_APPLICATION_ID
 } from './constant';
 
@@ -66,23 +65,8 @@ const ApplicationContextProvider = ({ children }) => {
 		}
 	}
 
-	//Update application
-	const updateApplication = async updatedApplication => {
-		try {
-			const response = await axios.put(`${apiURL}/application/${updatedApplication._id}`, updatedApplication)
-			if (response.data.success) {
-				dispatch({ type: UPDATE_APPLICATION, payload: response.data.application })
-				console.log(response.data.application);
-				return response.data
-			}
-		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
-		}
-	}
-
 	const [showAddApplicationModal, setShowAddApplicationModal] = useState(false);
 	const [showDeleteApplicationModal, setShowDeleteApplicationModal] = useState(false);
-	const [showUpdateApplicationModal, setShowUpdateApplicationModal] = useState(false);
 	// const [viewApplicationId, setViewApplicationId] = useState('');
 
 	const applicationContextData = {
@@ -94,10 +78,7 @@ const ApplicationContextProvider = ({ children }) => {
 		deleteApplication,
 		showDeleteApplicationModal,
 		setShowDeleteApplicationModal,
-		updateApplication,
 		findApplicationId,
-		showUpdateApplicationModal,
-		setShowUpdateApplicationModal,
 		// setViewApplicationId,
 		// viewApplicationId,
 	}

@@ -1,6 +1,6 @@
-
 import { CategoryContext } from '~/actions/context/CategoryContext';
-import { useContext, } from 'react';
+import { UserContext } from '~/actions/context/UserContext';
+import { useContext, useEffect } from 'react';
 import { CardMedia } from "@material-ui/core";
 import classNames from "classnames/bind";
 import { Fragment } from 'react';
@@ -16,6 +16,15 @@ function CourseItem({ data }) {
 	const {
 		categoryState: { categories },
 	} = useContext(CategoryContext)
+
+	const {
+		userState: { users },
+		getUser
+	} = useContext(UserContext)
+
+	useEffect(() => {
+		getUser()
+	}, [])
 
 	return (
 		<Fragment>
@@ -47,8 +56,22 @@ function CourseItem({ data }) {
 					</div>
 
 					<div className={cx('creator')}>
-						<img src={images.founder} alt="" />
-						<span>Le Hoang Anh</span>
+						{users.map((user) => {
+							if(user._id === data.user){
+								return (
+									<Fragment>
+										{!user.avatar ?
+											<img src={images.avatarDefault} alt="" className={cx('avatar')} />
+											: <CardMedia image={user.avatar} title='avatar' className={cx('avatar')} />
+										}
+										{!user.fullname ? 
+											<span className={cx('fullname-course')}>{user.role}</span>
+											: <span className={cx('fullname-course')}>{user.fullname}</span>
+										}
+									</Fragment>
+								)
+							}
+						})}
 					</div>
 				</div>
 			</div>

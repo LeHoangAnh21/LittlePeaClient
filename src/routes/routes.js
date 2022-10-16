@@ -9,27 +9,33 @@ import Blog from '~/pages/Blog'
 import BlogDetail from '~/pages/BlogDetail'
 import Recruitment from '~/pages/Recruitment'
 import RecruitmentDetail from '~/pages/RecruitmentDetail'
-import Application from '~/pages/Application'
+import ListCandidate from '~/pages/ListCandidate'
 import Manage from '~/pages/Manage'
 import ManageLesson from '~/pages/ManageLesson'
+import PersonalPage from '~/pages/PersonalPage'
+import ManageBlog from '~/pages/ManageBlog'
+import ManageRecruitment from '~/pages/ManageRecruitment'
 
 const publicRoutes = [
 	{ path: routeConfig.intro, component: Intro },
 ];
 
 const privateRoutes = [
-	
+
 	{ path: routeConfig.home, component: Home },
 	{ path: routeConfig.category, component: ManageCategory },
 	{ path: routeConfig.courses, component: Courses },
 	{ path: routeConfig.lesson, component: Lesson },
 	{ path: routeConfig.blog, component: Blog },
 	{ path: routeConfig.blogDetail, component: BlogDetail },
+	{ path: routeConfig.manageBlog, component: ManageBlog },
 	{ path: routeConfig.recruitment, component: Recruitment },
+	{ path: routeConfig.manageRecruitment, component: ManageRecruitment },
 	{ path: routeConfig.recruitmentDetail, component: RecruitmentDetail },
-	{ path: routeConfig.application, component: Application },
+	{ path: routeConfig.listCandidate, component: ListCandidate },
 	{ path: routeConfig.manageCourses, component: Manage },
 	{ path: routeConfig.manageLessons, component: ManageLesson },
+	{ path: routeConfig.personalPage, component: PersonalPage },
 
 ];
 

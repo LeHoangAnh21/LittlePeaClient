@@ -28,6 +28,11 @@ h1{
 	align-items: center;
 }
 
+.toggle{
+	display: flex;
+	align-items: center;
+}
+
 .avatar{
 	width: 50px;
 	height: 50px;
@@ -46,4 +51,8 @@ h1{
 .option-item:last-child{
 	margin-top: 5px;
 	border-top: 1px solid rgb(203, 198, 198);
+}
+
+.personal-page{
+	text-decoration: none;
 }

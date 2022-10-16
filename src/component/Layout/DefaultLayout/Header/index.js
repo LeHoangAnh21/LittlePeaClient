@@ -1,18 +1,30 @@
-import { UserContext } from '~/actions/context/UserContext';
+
 import { useContext } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss'
 import Search from '../Search';
 import images from '~/assets/images';
+import { AuthContext } from '~/actions/context/AuthContext';
+import { CardMedia } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const cx = classNames.bind(styles)
 
 function Header() {
 
-	// const {
-	// 	setShowAddUserModal,
-	// } = useContext(UserContext)
+	const {
+		authState: {user: {username, avatar}},
+		logoutAccount,
+	} = useContext(AuthContext)
+
+	const navigate = useNavigate();
+
+	const logout = () => {
+		logoutAccount()
+		navigate("/")
+	}
 
 	return (
 		<div className={cx('header')}>
@@ -24,13 +36,22 @@ function Header() {
 			<div className={cx('option')}>
 
 				<Dropdown>
-					<Dropdown.Toggle variant="light" id="dropdown-basic">
-						<img alt="" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcT12cP23udqvCqHW_2oAvK257g3oVQkv23tOumxtpfFOhHi8a5B" className={cx('avatar')} />
+					<Dropdown.Toggle variant="light" id="dropdown-basic" className={cx('toggle')}>
+						{!avatar ? 
+							<img src={images.avatarDefault} alt="" className={cx('avatar')} />
+							: <CardMedia image={avatar} title='avatar' className={cx('avatar')} />
+						}
 					</Dropdown.Toggle>
 
 					<Dropdown.Menu>
-						<Dropdown.Item className={cx('option-item')} href="#/action-1">Personal page</Dropdown.Item>
-						<Dropdown.Item className={cx('option-item')} href="#/action-2">Log-out</Dropdown.Item>
+						<Dropdown.Item className={cx('option-item')}>
+							<NavLink to={`/personal`} className={cx('personal-page')}>
+								{username} (Personal page)
+							</NavLink>	
+						</Dropdown.Item>
+						<Dropdown.Item className={cx('option-item')} onClick={logout}>
+							Logout
+						</Dropdown.Item>
 					</Dropdown.Menu>
 				</Dropdown>
 

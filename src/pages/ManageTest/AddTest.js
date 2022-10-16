@@ -1,15 +1,25 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import FileBase64 from 'react-file-base64';
+import { useParams } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react'
 import { CourseContext } from '~/actions/context/CourseContext'
 import { TestContext } from '~/actions/context/TestContext';
 
-const AddTestModal = ({ courseId }) => {
+const AddTestModal = () => {
+
+	const { id } = useParams();
+
+	const courseId = id;
+
 	const {
 		courseState: { courses },
+		getCourses
 	} = useContext(CourseContext)
+
+	useEffect(() => {
+		getCourses()
+	}, [])
 
 	let courseName = null
 
@@ -52,7 +62,7 @@ const AddTestModal = ({ courseId }) => {
 	}
 
 	const resetAddTestData = () => {
-		setNewTest({ title: '', description: '', course: '' })
+		setNewTest({ title: '', description: '', course: courseId })
 		setShowAddTestModal(false)
 	}
 
@@ -105,21 +115,6 @@ const AddTestModal = ({ courseId }) => {
 						</Form.Control>
 
 					</Form.Group><br />
-
-					{/* <Form.Group>
-						<Form.Control
-							as='select'
-							value={category}
-							name='category'
-							onChange={onChangeNewTest}
-						>
-							<option>Category</option>
-							{categories.map((category) => (
-								<option value={category._id} key={category._id}>{category.title}</option>
-							))}
-
-						</Form.Control>
-					</Form.Group> */}
 
 				</Modal.Body>
 

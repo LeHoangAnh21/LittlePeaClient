@@ -1,14 +1,37 @@
 import classNames from 'classnames/bind';
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import images from '~/assets/images';
 import styles from './Intro.module.scss';
 import FooterComponent from '~/component/Layout/FooterComponent';
+import LoginForm from '../Login&Register/LoginForm';
+import RegisterForm from '../Login&Register/RegisterForm';
+import { AuthContext } from '~/actions/context/AuthContext';
+import { Navigate } from 'react-router-dom'
 
 const cx = classNames.bind(styles)
 
 function Intro() {
+
+	const {
+		authState: { isAuthenticated }
+	} = useContext(AuthContext)
+
+	let body
+
+	if(isAuthenticated){
+		return <Navigate to="/home" replace />
+	}else{
+		body = (
+			<>
+				<LoginForm />
+			</>
+		)
+	}
+
 	return ( 
 		<Fragment>
+			{body}
+			<RegisterForm />
 			<div className={cx('intro')}>
 				<div className={cx('about-us')}>
 					<div className={cx('about-content')}>

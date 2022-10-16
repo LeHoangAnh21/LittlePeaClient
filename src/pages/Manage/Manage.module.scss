@@ -22,3 +22,18 @@
 	bottom: 80px;
 	right: 100px;
 }
+
+.option {
+	display: flex;
+	align-items: center;
+	background-color: #ededed;
+	padding: 10px 15px;
+	border-radius: 30px;
+	margin-bottom: 15px;
+}
+
+.add-lesson {
+	width: 160px;
+	margin: 0 10px;
+	font-weight: 500;
+}

@@ -1,5 +1,6 @@
 .body {
 	display: flex;
+	margin: 30px 20px;
 }
 
 .list_lessons {
@@ -29,4 +30,19 @@
 	color: #333;
 	font-weight: 500;
 	text-indent: 30px;
+}
+
+.option {
+	display: flex;
+	align-items: center;
+	background-color: #ededed;
+	padding: 10px 15px;
+	border-radius: 30px;
+	margin-bottom: 15px;
+}
+
+.add-lesson {
+	width: 160px;
+	margin: 0 10px;
+	font-weight: 500;
 }

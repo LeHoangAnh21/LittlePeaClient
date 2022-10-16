@@ -1,7 +1,8 @@
 
 import { RecruitmentContext } from '~/actions/context/RecruitmentContext';
 import { CategoryContext } from '~/actions/context/CategoryContext';
-import { useContext } from 'react';
+import { UserContext } from '~/actions/context/UserContext';
+import { useContext, useEffect } from 'react';
 import { CardMedia } from "@material-ui/core";
 import classNames from "classnames/bind";
 import { Fragment } from 'react';
@@ -17,24 +18,17 @@ const cx = classNames.bind(styles)
 function RecruitmentItem({ data }) {
 
 	const {
-		categoryState: { categories },
-	} = useContext(CategoryContext)
+		userState: { users },
+		getUser
+	} = useContext(UserContext)
+
+	useEffect(() => {
+		getUser()
+	}, [])
 
 	const {
-		findRecruitmentId,
-		setShowUpdateRecruitmentModal,
-		setShowDeleteRecruitmentModal,
-	} = useContext(RecruitmentContext)
-
-	const chooseRecruitment = recruitmentId => {
-		findRecruitmentId(recruitmentId)
-		setShowUpdateRecruitmentModal(true)
-	}
-
-	const deleteRecruitment = recruitmentId => {
-		findRecruitmentId(recruitmentId)
-		setShowDeleteRecruitmentModal(true)
-	}
+		categoryState: { categories },
+	} = useContext(CategoryContext)
 
 	return (
 
@@ -48,13 +42,6 @@ function RecruitmentItem({ data }) {
 							View now
 						</Button>
 					</Link>
-					<Button className={cx('button_edit')} onClick={chooseRecruitment.bind(this, data._id)}>
-						<EditIcon />
-					</Button>
-
-					<Button className={cx('button_delete')} onClick={deleteRecruitment.bind(this, data._id)}>
-						<DeleteIcon />
-					</Button>
 
 				</div>
 
@@ -63,24 +50,37 @@ function RecruitmentItem({ data }) {
 						<h5 className={cx('title')}>{data.title}</h5>
 					</Link>
 					<span className={cx('category')}>
-						{/* {categories.map((category) => {
+						{categories.map((category) => {
 							let categoryTitle = null
 							if (category._id === data.category) {
 								categoryTitle = category.title
 							}
 							return categoryTitle
-						})} */}
-						Front-end
+						})}
 					</span>
 
-					<span className={cx('salary')}>10M</span>
+					<span className={cx('salary')}>{data.salary}</span>
 
-					<span className={cx('location')}>Hanoi</span>
+					<span className={cx('location')}>{data.location}</span>
 				</div>
 
 				<div className={cx('employer')}>
-					<img src={images.founder} alt="" />
-					<span>Le Hoang Anh</span>
+					{users.map((user) => {
+						if (user._id === data.user) {
+							return (
+								<Fragment>
+									{!user.avatar ?
+										<img src={images.avatarDefault} alt="" className={cx('employer-avatar')} />
+										: <CardMedia image={user.avatar} title='avatar' className={cx('employer-avatar')} />
+									}
+									{!user.fullname ?
+										<span className={cx('employer-fullname')}>{user.role}</span>
+										: <span className={cx('employer-fullname')}>{user.fullname}</span>
+									}
+								</Fragment>
+							)
+						}
+					})}
 				</div>
 			</div>
 

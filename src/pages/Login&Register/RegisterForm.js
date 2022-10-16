@@ -3,79 +3,71 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import FileBase64 from 'react-file-base64';
 import { useContext, useState, useEffect } from 'react'
-import { UserContext } from '~/actions/context/UserContext'
+import { AuthContext } from '~/actions/context/AuthContext'
 
-const AddUserModal = () => {
+const LoginForm = () => {
 
 	const {
-		showAddUserModal,
-		setShowAddUserModal,
-		addUser,
-	} = useContext(UserContext)
+		registerAccount,
+		showRegisterModal,
+		setShowRegisterModal,
+	} = useContext(AuthContext)
 
 	// State
-	const [newUser, setNewUser] = useState({
-		name: '',
-		email: '',
-		password: '',
-		role: '',
-		avatar: '',
+	const [registerForm, setRegisterForm] = useState({
+		username: '',
+		password: '', 
+		fullname: '',
+		role: '', 
+		avatar: ''
 	})
 
-	const { name, email, password, role, avatar } = newUser
 
-	const onChangeNewUser = (e) =>
-		setNewUser({ ...newUser, [e.target.name]: e.target.value })
+	const { username, password, fullname, role, avatar } = registerForm
+
+	const onChangeRegisterForm = event =>
+		setRegisterForm({ ...registerForm, [event.target.name]: event.target.value })
 
 	const closeModal = () => {
 		resetAddUserData()
 	}
 
-	const onSubmit = async event => {
-		event.preventDefault()
-		const { success, message } = await addUser(newUser)
-		resetAddUserData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+	const resetAddUserData = () => {
+		setRegisterForm({ username: '', password: '', fullname: '', role: '', avatar: ''})
+		setShowRegisterModal(false)
 	}
 
-	const resetAddUserData = () => {
-		setNewUser({ name: '', email: '', password: '', role: '', avatar: '' })
-		setShowAddUserModal(false)
+	const login = async event => {
+		event.preventDefault()
+
+		try {
+			await registerAccount(registerForm)
+		} catch (error) {
+			console.log(error)
+		}
+
+		resetAddUserData()
 	}
 
 	return (
-		<Modal show={showAddUserModal} onHide={closeModal}>
+		<Modal show={showRegisterModal} onHide={closeModal}>
 
 			<Modal.Header closeButton>
-				<Modal.Title>Register</Modal.Title>
+				<Modal.Title>Login</Modal.Title>
 			</Modal.Header>
 
-			<Form onSubmit={onSubmit} >
+			<Form onSubmit={login} >
 				<Modal.Body>
 					<Form.Group>
 
 						<Form.Control
 							type='text'
-							placeholder='Name'
-							name='name'
+							placeholder='Username'
+							name='username'
 							required
 							aria-describedby='title-help'
-							value={name}
-							onChange={onChangeNewUser}
-						/>
-
-					</Form.Group><br />
-
-					<Form.Group>
-
-						<Form.Control
-							type='text'
-							placeholder='Email'
-							name='email'
-							required
-							aria-describedby='title-help'
-							value={email}
-							onChange={onChangeNewUser}
+							value={username}
+							onChange={onChangeRegisterForm}
 						/>
 
 					</Form.Group><br />
@@ -89,7 +81,21 @@ const AddUserModal = () => {
 							required
 							aria-describedby='title-help'
 							value={password}
-							onChange={onChangeNewUser}
+							onChange={onChangeRegisterForm}
+						/>
+
+					</Form.Group><br />
+
+					<Form.Group>
+
+						<Form.Control
+							type='text'
+							placeholder='Fullname'
+							name='fullname'
+							required
+							aria-describedby='title-help'
+							value={fullname}
+							onChange={onChangeRegisterForm}
 						/>
 
 					</Form.Group><br />
@@ -99,7 +105,8 @@ const AddUserModal = () => {
 							as='select'
 							value={role}
 							name='role'
-							onChange={onChangeNewUser}
+							required
+							onChange={onChangeRegisterForm}
 						>
 							<option>Role</option>
 							<option value='creator'>Creator</option>
@@ -116,8 +123,8 @@ const AddUserModal = () => {
 							multiple={false}
 							type='file'
 							value={avatar}
-							onDone={({ base64 }) => setNewUser({ ...newUser, avatar: base64 })}
-						// onChange={onChangeNewUser}
+							required
+							onDone={({ base64 }) => setRegisterForm({ ...registerForm, avatar: base64 })}
 						/>
 
 					</Form.Group><br />
@@ -131,7 +138,7 @@ const AddUserModal = () => {
 					</Button>
 
 					<Button variant='primary' type='submit'>
-						Register 
+						Register
 					</Button>
 
 				</Modal.Footer>
@@ -142,4 +149,4 @@ const AddUserModal = () => {
 	)
 }
 
-export default AddUserModal;
+export default LoginForm;

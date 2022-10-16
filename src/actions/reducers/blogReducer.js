@@ -3,7 +3,8 @@ import {
 	ADD_BLOG,
 	DELETE_BLOG,
 	UPDATE_BLOG,
-	FIND_BLOG_ID
+	FIND_BLOG_ID,
+	LIKE_BLOG
 } from "../context/constant";
 
 export const blogReducer = (state, action) => {
@@ -36,6 +37,12 @@ export const blogReducer = (state, action) => {
 			return {
 				...state,
 				blogs: updateBlog
+			}
+		case LIKE_BLOG:
+			const likeBlog = state.blogs.map((blog) => (blog._id === payload._id ? payload : blog))
+			return {
+				...state,
+				blogs: likeBlog
 			}
 		default:
 			return state

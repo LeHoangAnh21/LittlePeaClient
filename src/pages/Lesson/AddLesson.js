@@ -1,5 +1,6 @@
 import { LessonContext } from '~/actions/context/LessonContext';
 import { CourseContext } from '~/actions/context/CourseContext'
+import { AuthContext } from '~/actions/context/AuthContext';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -7,6 +8,10 @@ import FileBase64 from 'react-file-base64';
 import { useContext, useState, useEffect } from 'react'
 
 const AddLesson = () => {
+
+	const {
+		authState: { user: { _id } },
+	} = useContext(AuthContext)
 
 	const {
 		courseState: { courses, },
@@ -17,15 +22,20 @@ const AddLesson = () => {
 		getCourses()
 	}, [])
 
+	const courseList = []
+
+	// eslint-disable-next-line no-lone-blocks
+	{courses.map(course => {
+		if(course.user === _id){
+			courseList.push(course)
+		}
+	})}
+
 	const {
-		lessonState: { lesson, lessons, lessonsLoading },
 		getLessons,
 		showAddLessonModal,
 		setShowAddLessonModal,
 		addLesson,
-		updateLesson,
-		showUpdateLessonModal,
-		setShowUpdateLessonModal,
 		// showToast: { show, message, type },
 		// setShowToast
 	} = useContext(LessonContext)
@@ -120,7 +130,7 @@ const AddLesson = () => {
 							onChange={onChangeNewLesson}
 						>
 							<option>Course</option>
-							{courses.map((course) => (
+							{courseList.map((course) => (
 								<option value={course._id} key={course._id}>{course.name}</option>
 							))}
 

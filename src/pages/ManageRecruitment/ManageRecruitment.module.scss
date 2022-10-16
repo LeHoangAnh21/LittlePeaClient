@@ -1,0 +1,25 @@
+// List recruits
+
+.recruitment_body {
+	position: relative;
+}
+
+.header_recruitments {
+	font-size: 2rem;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.list_recruitments {
+	display: flex;
+	position: relative;
+	flex-wrap: wrap;
+}
+
+.btn-floating {
+	position: fixed;
+	bottom: 80px;
+	right: 100px;
+}
+
