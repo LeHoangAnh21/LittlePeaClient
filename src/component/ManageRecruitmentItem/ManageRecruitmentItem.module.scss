@@ -76,7 +76,7 @@
 
 .body-recruitItem {
 	width: 300px;
-	margin: 20px 0;
+	margin: 10px 0;
 }
 
 .title {
@@ -128,4 +128,26 @@
 	font-weight: bold;
 	display: flex;
 	align-items: center;
+}
+
+.status {
+	margin-left: 15px;
+}
+
+.status-title {
+	font-weight: bold;
+	margin-right: 10px;
+	color: #333;
+}
+
+.status-color-hide {
+	color: red;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.status-color-public {
+	color: green;
+	font-weight: bold;
+	font-style: italic;
 }

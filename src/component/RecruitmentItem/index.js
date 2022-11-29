@@ -1,4 +1,4 @@
-
+import { AuthContext } from '~/actions/context/AuthContext';
 import { RecruitmentContext } from '~/actions/context/RecruitmentContext';
 import { CategoryContext } from '~/actions/context/CategoryContext';
 import { UserContext } from '~/actions/context/UserContext';
@@ -8,7 +8,6 @@ import classNames from "classnames/bind";
 import { Fragment } from 'react';
 import styles from "./Recruitment.module.scss"
 import Button from 'react-bootstrap/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import images from '~/assets/images';
@@ -16,6 +15,10 @@ import images from '~/assets/images';
 const cx = classNames.bind(styles)
 
 function RecruitmentItem({ data }) {
+
+	const {
+		authState: { user: { role } },
+	} = useContext(AuthContext)
 
 	const {
 		userState: { users },
@@ -27,8 +30,18 @@ function RecruitmentItem({ data }) {
 	}, [])
 
 	const {
-		categoryState: { categories },
+		categoryState: { categories }
 	} = useContext(CategoryContext)
+
+	const {
+		findRecruitmentId,
+		setShowUpdateRecruitmentModal,
+	} = useContext(RecruitmentContext)
+
+	const chooseRecruitment = recruitmentId => {
+		findRecruitmentId(recruitmentId)
+		setShowUpdateRecruitmentModal(true)
+	}
 
 	return (
 
@@ -42,6 +55,12 @@ function RecruitmentItem({ data }) {
 							View now
 						</Button>
 					</Link>
+
+					{role === 'admin' &&
+						<Button className={cx('button_delete')} onClick={chooseRecruitment.bind(this, data._id)}>
+							<EditIcon />
+						</Button>
+					}
 
 				</div>
 

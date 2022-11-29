@@ -5,6 +5,7 @@ import { useContext, useState, useEffect } from 'react'
 import { AnswerContext } from '~/actions/context/AnswerContext'
 import { QuestionContext } from '~/actions/context/QuestionContext';
 import { TestContext } from '~/actions/context/TestContext';
+import { Fragment } from 'react'
 
 const AddAnswerModal = () => {
 
@@ -18,7 +19,7 @@ const AddAnswerModal = () => {
 	}, [])
 
 	const {
-		questionState: { questions },
+		questionState: { question, questions },
 		getQuestions,
 	} = useContext(QuestionContext)
 
@@ -27,20 +28,32 @@ const AddAnswerModal = () => {
 	}, [])
 
 	const { 
+		answerState: { answers },
+		getAnswer,
 		showAddAnswerModal, 
 		setShowAddAnswerModal, 
 		addAnswer,
+		setToastAnswer
 	} = useContext(AnswerContext)
 
-	// State
+	const [checkIsTrue, setCheckIsTrue] = useState(false)
 
+	// State
 	const [newAnswer, setNewAnswer] = useState({
 		title: '',
 		isTrue: '',
-		question: '',
+		questionId: question._id
 	})
 
-	const { title, isTrue, question, } = newAnswer
+	useEffect(() => {
+		setNewAnswer({
+			title: '',
+			isTrue: '',
+			questionId: question._id
+		})
+	}, [question])
+
+	const { title, isTrue, questionId } = newAnswer
 
 	const onChangeNewAnswer = (e) =>
 		setNewAnswer({ ...newAnswer, [e.target.name]: e.target.value })
@@ -51,24 +64,39 @@ const AddAnswerModal = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addAnswer(newAnswer)
+		const { success, messageAnswer } = await addAnswer(newAnswer)
 		resetAddAnswerData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setToastAnswer({ showToastAnswer: true, messageAnswer, typeToastAnswer: success ? 'success' : 'danger' })
 	}
 
 	const resetAddAnswerData = () => {
-		setNewAnswer({ title: '', isTrue: '', question: ''})
+		if (checkIsTrue === false) {
+			setNewAnswer({ title: '', isTrue: '', questionId: question._id })
+		} else {
+			setNewAnswer({ title: '', isTrue: 'false', questionId: question._id })
+		}
 		setShowAddAnswerModal(false)
 	}
 
-	const questionFit = []
+	console.log(checkIsTrue);
 
-	// eslint-disable-next-line no-lone-blocks
-	{questions.map(question => {
-		if(question.test === test._id){
-			questionFit.push(question)
-		}
-	})}
+	useEffect(() => {
+		getAnswer()
+	}, [])
+
+	useEffect(() => {
+		setCheckIsTrue(false)
+	}, [newAnswer])
+	
+	useEffect(() => {
+		answers.map((answer) => {
+			if (answer.questionId === question._id){
+				if (answer.isTrue === 'true') {
+					setCheckIsTrue(true)
+				}
+			} 
+		})
+	}, [newAnswer])
 
 	return (
 		<Modal show={showAddAnswerModal} onHide={closeModal}>
@@ -95,35 +123,35 @@ const AddAnswerModal = () => {
 
 					<Form.Group>
 
-						<Form.Control
-							as='select'
+						{checkIsTrue === false && 
+							<Fragment>
+								<Form.Check
+									value="true"
+									name='isTrue'
+									type="radio"
+									aria-label="radio 1"
+									label="True"
+									onChange={onChangeNewAnswer}
+								/>
+							</Fragment>
+						}
+
+						<Form.Check
+							value="false"
 							name='isTrue'
-							value={isTrue}
+							type="radio"
+							aria-label="radio 2"
+							label="False"
 							onChange={onChangeNewAnswer}
-							placeholder='Option'
-						>
-							<option selected>True or False</option>
-							<option value="true" key="true">True</option>
-							<option value="false" key="false">False</option>
-						</Form.Control>
+						/>
 
 					</Form.Group><br />
-
-					<Form.Group>
-
-						<Form.Control
-							as='select'
-							name='question'
-							value={question}
-							onChange={onChangeNewAnswer}
-						>
-							<option>Question</option>
-							{questionFit.map((question) => (
-								<option value={question._id} key={question._id}>{question.title}</option>
-							))}
-						</Form.Control>
-
-					</Form.Group><br />
+					
+					{checkIsTrue === true &&
+						<Form.Label>
+							You added a correct answer earlier. You can only add one correct answer.
+						</Form.Label>
+					}
 
 				</Modal.Body>
 

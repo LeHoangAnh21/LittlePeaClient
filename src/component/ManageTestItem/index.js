@@ -83,9 +83,11 @@ function ManagaTestItem({ data }) {
 		setShowDeleteQuestionModal(true)
 	}
 
-	const addAnswer = testId => {
-		findTestId(testId)
+	const addAnswer = (questionId) => {
+		// findTestId(testId)
+		findQuestionId(questionId)
 		setShowAddAnswerModal(true)
+		// console.log(questionId);
 	}
 
 	const chooseAnswer = answerId => {
@@ -130,11 +132,11 @@ function ManagaTestItem({ data }) {
 					<span>{data.description || 'None'}</span>
 				</div>
 
-				{data.Question !== 0 && 
+				{/* {data.Question !== 0 && 
 					<Button className={cx('button_edit')} onClick={addAnswer.bind(this, data._id)}>
 						Add new answer
 					</Button>
-				}
+				} */}
 
 				{questions.map((question) => {
 					
@@ -167,7 +169,7 @@ function ManagaTestItem({ data }) {
 	
 								<ul className={cx('answer')}>
 									{answers.map(answer => {
-										if (answer.question === question._id){
+										if (answer.questionId === question._id){
 
 											return (
 												<Fragment>
@@ -190,6 +192,10 @@ function ManagaTestItem({ data }) {
 										}
 									})}
 								</ul>
+
+								<Button className={cx('button_edit')} onClick={addAnswer.bind(this, question._id)}>
+									Add new answer
+								</Button>
 							</div>
 						)
 

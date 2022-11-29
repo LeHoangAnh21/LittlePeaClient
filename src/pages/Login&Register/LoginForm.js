@@ -10,6 +10,7 @@ const LoginForm = () => {
 		loginAccount,
 		showLoginModal,
 		setShowLoginModal,
+		setShowToast
 	} = useContext(AuthContext)
 
 	// State
@@ -36,10 +37,12 @@ const LoginForm = () => {
 		event.preventDefault()
 
 		try {
-			await loginAccount(loginForm)
+			const { success, message } = await loginAccount(loginForm)
+			setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 		} catch (error) {
 			console.log(error)
 		}
+
 
 		resetAddUserData()
 	}

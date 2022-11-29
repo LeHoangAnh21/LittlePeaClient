@@ -15,6 +15,9 @@ import ManageLesson from '~/pages/ManageLesson'
 import PersonalPage from '~/pages/PersonalPage'
 import ManageBlog from '~/pages/ManageBlog'
 import ManageRecruitment from '~/pages/ManageRecruitment'
+import CandidateDetail from '~/pages/CandidateDetail'
+import PersonalDetail from '~/pages/PersonalDetail'
+import ManageAccountRecruitment from '~/pages/ManageAccountRecruitment'
 
 const publicRoutes = [
 	{ path: routeConfig.intro, component: Intro },
@@ -36,6 +39,9 @@ const privateRoutes = [
 	{ path: routeConfig.manageCourses, component: Manage },
 	{ path: routeConfig.manageLessons, component: ManageLesson },
 	{ path: routeConfig.personalPage, component: PersonalPage },
+	{ path: routeConfig.candidate, component: CandidateDetail },
+	{ path: routeConfig.personalDetail, component: PersonalDetail },
+	{ path: routeConfig.manageAccRecruitment, component: ManageAccountRecruitment },
 
 ];
 

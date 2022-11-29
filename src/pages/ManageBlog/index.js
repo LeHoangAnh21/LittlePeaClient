@@ -33,12 +33,11 @@ function ManageBlog() {
 	let body = null
 	let blogList = []
 
-	// eslint-disable-next-line no-lone-blocks
-	{blogs.map(blog => {
+	blogs.map(blog => {
 		if (blog.user === _id){
 			blogList.push(blog)
 		}
-	})}
+	})
 
 	if (blogList.length === 0) {
 		body = (

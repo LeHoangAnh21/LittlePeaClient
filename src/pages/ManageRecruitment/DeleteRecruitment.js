@@ -8,6 +8,7 @@ const DeleteRecruitmentModal = () => {
 
 	const {
 		recruitmentState: { recruitment, },
+		getRecruitment,
 		deleteRecruitment,
 		showDeleteRecruitmentModal,
 		setShowDeleteRecruitmentModal, 

@@ -96,3 +96,25 @@
 	font-weight: bold;
 	margin: 0 0 15px 15px;
 }
+
+.status {
+	margin-left: 15px;
+}
+
+.status-title {
+	font-weight: bold;
+	margin-right: 10px;
+	color: #333;
+}
+
+.status-color-hide {
+	color: red;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.status-color-public {
+	color: green;
+	font-weight: bold;
+	font-style: italic;
+}

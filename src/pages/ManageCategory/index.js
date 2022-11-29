@@ -5,7 +5,7 @@ import { useEffect, useContext, Fragment } from 'react';
 import Table from 'react-bootstrap/Table';
 import classNames from 'classnames/bind';
 import styles from './ManageCategory.module.scss'
-import { Button } from 'react-bootstrap';
+import { Button, Toast } from 'react-bootstrap';
 import AddIcon from '@material-ui/icons/Add';
 import AddCategoryModal from './AddCategory';
 import UpdateCategoryModal from './UpdateCategory';
@@ -24,6 +24,8 @@ function ManageCategory() {
 		categoryState: { category, categories },
 		getCategories,
 		setShowAddCategoryModal,
+		showToast: { show, message, type },
+		setShowToast	
 	} = useContext(CategoryContext)
 
 	useEffect(() => {
@@ -99,6 +101,23 @@ function ManageCategory() {
 					{category !== null && <DeleteCategoryModal />}
 				</Fragment>
 			}
+
+			<Toast
+				show={show}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				className={`bg-${type} text-white`}
+				onClose={setShowToast.bind(this, {
+					show: false,
+					message: '',
+					type: null
+				})}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{message}</strong>
+				</Toast.Body>
+			</Toast>
 
 		</div>
 	);

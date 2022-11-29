@@ -11,6 +11,7 @@ const LoginForm = () => {
 		registerAccount,
 		showRegisterModal,
 		setShowRegisterModal,
+		setShowToast
 	} = useContext(AuthContext)
 
 	// State
@@ -19,11 +20,15 @@ const LoginForm = () => {
 		password: '', 
 		fullname: '',
 		role: '', 
+		workplace: '',
+		email: '',
+		activation: 'waiting',
+		time: '',
 		avatar: ''
 	})
 
 
-	const { username, password, fullname, role, avatar } = registerForm
+	const { username, password, fullname, role, workplace, email, activation, time, avatar } = registerForm
 
 	const onChangeRegisterForm = event =>
 		setRegisterForm({ ...registerForm, [event.target.name]: event.target.value })
@@ -33,7 +38,7 @@ const LoginForm = () => {
 	}
 
 	const resetAddUserData = () => {
-		setRegisterForm({ username: '', password: '', fullname: '', role: '', avatar: ''})
+		setRegisterForm({ username: '', password: '', fullname: '', role: '', workplace: '', email: '', activation: 'waiting', avatar: ''})
 		setShowRegisterModal(false)
 	}
 
@@ -41,7 +46,8 @@ const LoginForm = () => {
 		event.preventDefault()
 
 		try {
-			await registerAccount(registerForm)
+			const { success, message } = await registerAccount(registerForm)
+			setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 		} catch (error) {
 			console.log(error)
 		}
@@ -53,7 +59,7 @@ const LoginForm = () => {
 		<Modal show={showRegisterModal} onHide={closeModal}>
 
 			<Modal.Header closeButton>
-				<Modal.Title>Login</Modal.Title>
+				<Modal.Title>Register</Modal.Title>
 			</Modal.Header>
 
 			<Form onSubmit={login} >
@@ -114,6 +120,32 @@ const LoginForm = () => {
 							<option value='recruitment'>Recruitment</option>
 
 						</Form.Control>
+					</Form.Group><br />
+
+					<Form.Group>
+
+						<Form.Control
+							type='text'
+							placeholder='Workplace'
+							name='workplace'
+							aria-describedby='title-help'
+							value={workplace}
+							onChange={onChangeRegisterForm}
+						/>
+
+					</Form.Group><br />
+
+					<Form.Group>
+
+						<Form.Control
+							type='email' 
+							placeholder='Email'
+							name='email'
+							aria-describedby='title-help'
+							value={email}
+							onChange={onChangeRegisterForm}
+						/>
+
 					</Form.Group><br />
 
 					<Form.Group>

@@ -1,0 +1,49 @@
+.slider{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.slider-item{
+	width: 90%;
+	border-radius: 30px;
+}
+
+.homepage{
+	margin-top: 50px;
+}
+
+.homepage-title-header {
+	display: flex;
+	justify-content: space-between;
+	width: 91%;
+	color: #56bd95;
+	cursor: pointer;
+
+	.more-btn{
+		display: flex;
+		align-items: center;
+		font-weight: bold;
+		font-style: italic;
+		letter-spacing: 3px;
+		text-decoration: none;
+	}
+}
+
+.homepage-title{
+	font-size: 2rem;
+	font-weight: bold;
+	color: #333;
+}
+
+.list_courses {
+	display: flex;
+	position: relative;
+	flex-wrap: wrap;
+}
+
+.list_recruitments {
+	display: flex;
+	position: relative;
+	flex-wrap: wrap;
+}

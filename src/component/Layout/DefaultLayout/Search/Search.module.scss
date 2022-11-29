@@ -1,6 +1,6 @@
 .search{
 	display: flex;
-	justify-content: center;
+	justify-content: flex-end;
 	align-items: center;
 }
 
@@ -18,7 +18,3 @@
 	border: none;
 	outline: none;
 }
-
-// .input:focus ~ .search-component{
-// 	border: 1px solid #373737;
-// }

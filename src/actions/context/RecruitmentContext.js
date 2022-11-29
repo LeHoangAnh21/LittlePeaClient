@@ -20,6 +20,12 @@ const RecruitmentContextProvider = ({ children }) => {
 		recruitmentsLoading: true
 	})
 
+	const [showToast, setShowToast] = useState({
+		show: false,
+		message: '',
+		type: null
+	})
+
 	//Get recruitments
 	const getRecruitment = async () => {
 		try {
@@ -100,6 +106,8 @@ const RecruitmentContextProvider = ({ children }) => {
 		setShowUpdateRecruitmentModal,
 		setViewRecruitmentId,
 		viewRecruitmentId,
+		showToast,
+		setShowToast,
 	}
 
 	return (

@@ -7,7 +7,6 @@ import { Fragment } from 'react';
 import styles from "./ManageCandidate.module.scss"
 import Button from 'react-bootstrap/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import images from '~/assets/images';
 
@@ -41,7 +40,7 @@ function ManageCandidate({ data }) {
 				<div className={cx('application_avatar')}>
 					<CardMedia image={data.imageCV || ''} title='Title' className={cx('media')} />
 					
-					<Link to={`/recruitment/${data._id}`} className={cx('button_learn')}>
+					<Link to={`/list-candidate/${data._id}`} className={cx('button_learn')}>
 						<Button>
 							View now
 						</Button>

@@ -1,7 +1,6 @@
 
 import { RecruitmentContext } from '~/actions/context/RecruitmentContext';
 import { CategoryContext } from '~/actions/context/CategoryContext';
-import { UserContext } from '~/actions/context/UserContext';
 import { useContext, useEffect } from 'react';
 import { CardMedia } from "@material-ui/core";
 import classNames from "classnames/bind";
@@ -11,20 +10,11 @@ import Button from 'react-bootstrap/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
-import images from '~/assets/images';
+import moment from 'moment/moment';
 
 const cx = classNames.bind(styles)
 
 function ManageRecruitmentItem({ data }) {
-
-	const {
-		userState: { users },
-		getUser
-	} = useContext(UserContext)
-
-	useEffect(() => {
-		getUser()
-	}, [])
 
 	const {
 		categoryState: { categories },
@@ -49,6 +39,20 @@ function ManageRecruitmentItem({ data }) {
 	const deleteRecruitment = recruitmentId => {
 		findRecruitmentId(recruitmentId)
 		setShowDeleteRecruitmentModal(true)
+	}
+
+	let statusRecruitments = null
+
+	const deadlineDay = new Date(data.deadline)
+	const current = new Date()
+
+	const deadlineDate = moment(deadlineDay).format('YYYY-MM-DD')
+	const currentDay = moment(current).format('YYYY-MM-DD')
+
+	if (deadlineDate < currentDay) {
+		statusRecruitments = 'Hide'
+	} else {
+		statusRecruitments = 'Public'
 	}
 
 	return (
@@ -90,28 +94,31 @@ function ManageRecruitmentItem({ data }) {
 					<span className={cx('salary')}>{data.salary}</span>
 
 					<span className={cx('location')}>{data.location}</span>
+
+					<div className={cx('status')}>
+						<span className={cx('status-title')}>Status:</span>
+						{data.status === 'Hide' ?
+							<span className={cx('status-color-hide')}>{data.status}</span>
+							: <span className={cx('status-color-public')}>{data.status}</span>
+						}
+					</div>
+					<div className={cx('status')}>
+						{statusRecruitments === 'Hide' && data.status === 'Public' ?
+							<span className={cx('status-color-hide')}>
+								The system has automatically hidden this job posting because it has expired.
+							</span>
+							: null
+						}
+
+						{statusRecruitments === 'Hide' && data.status === 'Hide' ?
+							<span className={cx('status-color-hide')}>
+								This job posting has expired.
+							</span>
+							: null
+						}
+					</div>
 				</div>
 
-				<div className={cx('employer')}>
-					{users.map((user) => {
-						if (user._id === data.user) {
-							return (
-								<Fragment>
-									{!user.avatar ?
-										<img src={images.avatarDefault} alt="" className={cx('employer-avatar')} />
-										: <CardMedia image={user.avatar} title='avatar' className={cx('employer-avatar')} />
-									}
-									{!user.fullname ?
-										<span className={cx('employer-fullname')}>{user.role}</span>
-										: <span className={cx('employer-fullname')}>{user.fullname}</span>
-									}
-								</Fragment>
-							)
-						}
-					})}
-					{/* <img src={images.founder} alt="" />
-					<span>Le Hoang Anh</span> */}
-				</div>
 			</div>
 
 		</Fragment>

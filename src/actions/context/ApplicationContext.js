@@ -19,6 +19,12 @@ const ApplicationContextProvider = ({ children }) => {
 		applicationsLoading: true
 	})
 
+	const [showToast, setShowToast] = useState({
+		show: false,
+		message: '',
+		type: null
+	})
+
 	//Get applications
 	const getApplication = async () => {
 		try {
@@ -67,7 +73,6 @@ const ApplicationContextProvider = ({ children }) => {
 
 	const [showAddApplicationModal, setShowAddApplicationModal] = useState(false);
 	const [showDeleteApplicationModal, setShowDeleteApplicationModal] = useState(false);
-	// const [viewApplicationId, setViewApplicationId] = useState('');
 
 	const applicationContextData = {
 		applicationState,
@@ -79,8 +84,8 @@ const ApplicationContextProvider = ({ children }) => {
 		showDeleteApplicationModal,
 		setShowDeleteApplicationModal,
 		findApplicationId,
-		// setViewApplicationId,
-		// viewApplicationId,
+		showToast,
+		setShowToast,
 	}
 
 	return (

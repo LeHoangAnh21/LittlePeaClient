@@ -11,6 +11,7 @@ const AddCategoryModal = () => {
 		showAddCategoryModal,
 		setShowAddCategoryModal,
 		addCategory,
+		setShowToast	
 	} = useContext(CategoryContext)
 
 	// State
@@ -32,7 +33,7 @@ const AddCategoryModal = () => {
 		event.preventDefault()
 		const { success, message } = await addCategory(newCategory)
 		resetAddCategoryData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddCategoryData = () => {

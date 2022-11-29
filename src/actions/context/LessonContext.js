@@ -20,6 +20,12 @@ const LessonContextProvider = ({ children }) => {
 		lessonsLoading: true
 	})
 
+	const [showToast, setShowToast] = useState({
+		show: false,
+		message: '',
+		type: null
+	})
+
 	//Get lessons
 	const getLessons = async () => {
 		try {
@@ -96,6 +102,8 @@ const LessonContextProvider = ({ children }) => {
 		findLessonId,
 		showUpdateLessonModal,
 		setShowUpdateLessonModal,
+		showToast,
+		setShowToast,
 	}
 
 	return (

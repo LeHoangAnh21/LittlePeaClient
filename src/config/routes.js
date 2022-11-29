@@ -11,9 +11,12 @@ const routes = {
 	manageRecruitment: '/manage-recruitment',
 	recruitmentDetail: '/recruitment/:id',
 	listCandidate: '/list-candidate',
+	candidate: '/list-candidate/:id',
 	manageCourses: '/manage',
 	manageLessons: '/manage/:id',
-	personalPage: '/personal'
+	personalPage: '/personal',
+	personalDetail: '/personal/:id',
+	manageAccRecruitment: '/manage-acc-recruitment'
 }
 
 export default routes

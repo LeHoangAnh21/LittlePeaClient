@@ -22,6 +22,7 @@ const AddBlogModal = () => {
 		showAddBlogModal, 
 		setShowAddBlogModal, 
 		addBlog,
+		setShowToast
 	} = useContext(BlogContext)
 
 	// State
@@ -29,6 +30,7 @@ const AddBlogModal = () => {
 		title: '',
 		content: '',
 		image: '',
+		status: 'Public',
 		category: '',
 	})
 
@@ -45,11 +47,11 @@ const AddBlogModal = () => {
 		event.preventDefault()
 		const { success, message } = await addBlog(newBlog)
 		resetAddBlogData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddBlogData = () => {
-		setNewBlog({ name: '', description: '', image: '', category: '' })
+		setNewBlog({ name: '', description: '', image: '', status: 'Public', category: '' })
 		setShowAddBlogModal(false)
 	}
 

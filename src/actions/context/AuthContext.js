@@ -17,6 +17,12 @@ const AuthContextProvider = ({ children }) => {
 		user: null
 	})
 
+	const [showToast, setShowToast] = useState({
+		show: false,
+		message: '',
+		type: null
+	})
+
 	// Authenticate user
 	const loadUser = async () => {
 		if (localStorage[TOKEN_NAME]) {
@@ -109,6 +115,8 @@ const AuthContextProvider = ({ children }) => {
 		showRegisterModal,
 		setShowRegisterModal,
 		logoutAccount,
+		showToast,
+		setShowToast,
 	}
 
 	// Return provider

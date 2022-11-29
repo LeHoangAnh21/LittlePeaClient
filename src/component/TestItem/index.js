@@ -4,17 +4,23 @@ import styles from "./TestItem.module.scss";
 import DescriptionIcon from '@material-ui/icons/Description';
 import ArrowDropDownTwoToneIcon from '@material-ui/icons/ArrowDropDownTwoTone';
 import CloseIcon from '@material-ui/icons/Close';
-import { TestContext } from '~/actions/context/TestContext';
+import { PointContext } from '~/actions/context/PointContext';
 import { QuestionContext } from '~/actions/context/QuestionContext';
 import { AnswerContext } from '~/actions/context/AnswerContext';
+import { AuthContext } from '~/actions/context/AuthContext';
 import Button from 'react-bootstrap/Button';
 import { CToast, CToastHeader, CToastBody, CToaster, CButton, CToastClose } from '@coreui/bootstrap-react'
 
-import Pagination from 'react-bootstrap/Pagination';
+import Modal from 'react-bootstrap/Modal'
+import Form from 'react-bootstrap/Form'
 
 const cx = classNames.bind(styles)
 
 function TestItem({ data }) {
+
+	const {
+		authState: { user: {_id} }
+	} = useContext(AuthContext)
 
 	const [hidden, setHidden] = useState(true);
 	const [show, setShow] = useState(false);
@@ -104,15 +110,210 @@ function TestItem({ data }) {
 		}
 	}
 
-	useEffect(() => {
-		addToast(exampleToast)
-	}, [currentQuestion])
-
 	const restartTest = () => {
 		setScore(0)
 		setFinalResult(false)
 		setCurrentQuestion(0)
 		setAnswerTrue(0)
+	}
+
+	const {
+		pointState: { points },
+		getPoints,
+		showAddPointModal,
+		setShowAddPointModal,
+		addPoint,
+		findPointId,
+	} = useContext(PointContext)
+	
+	useEffect(() => {
+		getPoints()
+	}, [])
+	
+	let PointOfCourse = {}
+
+	let ListPointOfCourse = []
+	
+	const scoreFinal = (100 / data.Question) * score
+
+	points.map(pointlist => {
+		if (pointlist.course === data.course){
+			ListPointOfCourse.push(pointlist)
+		}
+	})
+
+	ListPointOfCourse.map(IdOfUser => {
+		if (IdOfUser.user === _id){
+			PointOfCourse = IdOfUser
+		}
+	})
+
+	const questionsList = []
+
+	questions.map(question => {
+		if (question.test === data._id) {
+			questionsList.push(question)
+		}
+	})
+
+	console.log(questionsList);
+
+	// State
+	const [newPoint, setNewPoint] = useState({
+		point: scoreFinal + ' / 100',
+		course: data.course,
+	})
+
+	useEffect(() => setNewPoint({ point: scoreFinal + ' / 100', course: data.course }), [score])
+
+	const { point, course } = newPoint
+
+	const onChangeNewPoint = (e) =>
+		setNewPoint({ ...newPoint, [e.target.name]: e.target.value })
+
+	const closeModal = () => {
+		resetAddPointData()
+	}
+
+	const onSubmit = async event => {
+		event.preventDefault()
+		const { success, message } = await addPoint(newPoint)
+		resetAddPointData()
+		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+	}
+
+	const resetAddPointData = () => {
+		setNewPoint({ point: '', course: data.course })
+		setShowAddPointModal(false)
+	}
+
+	useEffect(() => {
+		addToast(exampleToast)
+	}, [currentQuestion])
+
+	let body = null
+	
+	if (PointOfCourse && PointOfCourse.user === _id) {
+		body = (
+			<Fragment>
+				<div className={cx('result-component')}>
+					<span className={cx('result-title')}>Final Result</span>
+					<span className={cx('result')}>Your point: {PointOfCourse.point}</span>
+				</div>
+				<div>
+					{questions.map((question) => {
+
+						if (question.test === data._id) {
+
+							numberQuestion = numberQuestion + 1
+
+							return (
+								<div className={cx('question-component')}>
+									<div className={cx('question-header')}>
+										<span className={cx('question-number')}>
+											Question {numberQuestion} out of {data.Question}
+										</span>
+									</div>
+
+									<span className={cx('question')}>
+										{question.title}
+									</span>
+
+									<ul className={cx('answer')}>
+										{answers.map(answer => {
+											if (answer.questionId === question._id) {
+												return (
+													<Fragment>
+
+														<li className={cx('answer-item', { show: show })} key={answer._id}>
+															{answer.title}
+														</li>
+
+													</Fragment>
+												)
+											}
+										})}
+									</ul>
+								</div>
+							)
+
+						}
+					})}
+				</div>
+			</Fragment>
+		)
+	} else {
+		if (finalResult) {
+			body = (
+				<div className={cx('result-component')}>
+					<span className={cx('result-title')}>Final Result</span>
+					<span className={cx('result')}>{score} out of {data.Question} correct</span>
+					<span className={cx('result')}>Your point: {point}</span>
+
+					<Form onSubmit={onSubmit} >
+						<Modal.Body>
+
+						</Modal.Body>
+
+						<div className={cx('result-button')}>
+
+							<Button onClick={restartTest}>Restart test</Button>
+
+							<Button variant='primary' type='submit'>
+								Save result
+							</Button>
+
+						</div>
+
+					</Form>
+				</div>
+			)
+		} else {
+			body = (
+				<div>
+
+					{questionsList.map((question, index) => {
+							
+						numberQuestion = numberQuestion + 1
+
+						if (currentQuestion === index) {
+							return (
+								<div className={cx('question-component')}>
+									<div className={cx('question-header')}>
+										<span className={cx('question-number')}>
+											Question {numberQuestion} out of {data.Question}
+										</span>
+									</div>
+
+									<span className={cx('question')}>
+										{question.title}
+									</span>
+
+									<ul className={cx('answer')}>
+										{answers.map(answer => {
+											if (answer.questionId === question._id) {
+												return (
+													<Fragment>
+
+														<li className={cx('answer-item', { show: show })} key={answer._id} onClick={() => {
+															answerClick(answer.isTrue)
+														}}>
+															{answer.title}
+														</li>
+
+													</Fragment>
+												)
+											}
+										})}
+									</ul>
+								</div>
+							)
+
+						}
+					})}
+				</div>
+			)
+		}
 	}
 
 	return (
@@ -139,63 +340,7 @@ function TestItem({ data }) {
 					<span>{data.description || 'None'}</span>
 				</div>
 
-				{finalResult ? (
-					<div className={cx('result-component')}>
-						<span className={cx('result-title')}>Final Result</span>
-						<span className={cx('result')}>{score} out of {data.Question} correct</span>
-						<div className={cx('result-button')}>
-							<Button onClick={restartTest}>Restart test</Button>
-							<Button>Save result</Button>
-						</div>
-					</div>
-				) : (
-
-					<div>
-
-						{questions.map((question, index) => {
-	
-							if (question.test === data._id) {
-								
-								numberQuestion = numberQuestion + 1
-
-								if (currentQuestion === index){
-									return (
-										<div className={cx('question-component')}>
-											<div className={cx('question-header')}>
-												<span className={cx('question-number')}>
-													Question {numberQuestion} out of {data.Question}
-												</span>
-											</div>
-		
-											<span className={cx('question')}>
-												{question.title}
-											</span>
-		
-											<ul className={cx('answer')}>
-												{answers.map(answer => {
-													if (answer.question === question._id) {
-														return (
-															<Fragment>
-		
-																<li className={cx('answer-item', { show: show })} key={answer._id} onClick={() => {
-																	answerClick(answer.isTrue)
-																}}>
-																	{answer.title}
-																</li>
-		
-															</Fragment>
-														)
-													}
-												})}
-											</ul> 
-										</div>
-									)
-
-								}
-							}
-						})}
-					</div>
-				)}
+				{body}
 
 				<CToaster ref={toaster} push={toast} answerTrue={answerTrue} placement="top-end" />
 

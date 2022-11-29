@@ -20,6 +20,12 @@ const TestContextProvider = ({ children }) => {
 		testsLoading: true
 	})
 
+	const [toastTest, setToastTest] = useState({
+		showToastTest: false,
+		messageToastTest: '',
+		typeToastTest: null
+	})
+
 	//Get Tests
 	const getTest = async () => {
 		try {
@@ -29,7 +35,7 @@ const TestContextProvider = ({ children }) => {
 				return response.data
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageToastTest: 'server error' }
 		}
 	}
 
@@ -43,7 +49,7 @@ const TestContextProvider = ({ children }) => {
 				return response.data;
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageToastTest: 'server error' }
 		}
 
 	}
@@ -76,14 +82,13 @@ const TestContextProvider = ({ children }) => {
 				return response.data
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageToastTest: 'server error' }
 		}
 	}
 
 	const [showAddTestModal, setShowAddTestModal] = useState(false);
 	const [showDeleteTestModal, setShowDeleteTestModal] = useState(false);
 	const [showUpdateTestModal, setShowUpdateTestModal] = useState(false);
-	// const [viewTestId, setViewTestId] = useState('');
 
 	const testContextData = {
 		testState,
@@ -98,8 +103,8 @@ const TestContextProvider = ({ children }) => {
 		findTestId,
 		showUpdateTestModal,
 		setShowUpdateTestModal,
-		// setViewTestId,
-		// viewTestId,
+		toastTest,
+		setToastTest,
 	}
 
 	return (

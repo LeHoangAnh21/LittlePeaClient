@@ -1,14 +1,14 @@
 // import { Fragment } from 'react'
 import { CategoryContext } from '~/actions/context/CategoryContext';
-import { BlogContext } from '~/actions/context/BlogContext';
+import { AuthContext } from '~/actions/context/AuthContext';
 import { UserContext } from '~/actions/context/UserContext';
+import { BlogContext } from '~/actions/context/BlogContext';
 import { useContext, useEffect } from 'react';
 import { CardMedia } from "@material-ui/core";
 import classNames from "classnames/bind";
 import { Fragment } from 'react';
 import styles from "./BlogItem.module.scss"
 import Button from 'react-bootstrap/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 import images from '~/assets/images';
@@ -16,6 +16,10 @@ import images from '~/assets/images';
 const cx = classNames.bind(styles)
 
 function BlogItem({ data }) {
+
+	const {
+		authState: { user: { role } },
+	} = useContext(AuthContext)
 
 	const {
 		userState: { users },
@@ -27,7 +31,7 @@ function BlogItem({ data }) {
 	}, [])
 
 	const {
-		categoryState: { categories },
+		categoryState: { categories }
 	} = useContext(CategoryContext)
 
 	//Cal Day
@@ -80,6 +84,16 @@ function BlogItem({ data }) {
 		)
 	}
 
+	const {
+		findBlogId,
+		setShowUpdateBlogModal,
+	} = useContext(BlogContext)
+
+	const chooseBlog = blogId => {
+		findBlogId(blogId)
+		setShowUpdateBlogModal(true)
+	}
+
 	return (
 		<Fragment>
 			<div className={cx('blog_item')} >
@@ -90,6 +104,12 @@ function BlogItem({ data }) {
 						<Link to={`/blog/${data._id}`} className={cx('button_learn')}>
 							<h5 className={cx('title')}>{data.title}</h5>
 						</Link>
+
+						{role === 'admin' &&
+							<Button className={cx('button_delete')} onClick={chooseBlog.bind(this, data._id)}>
+								<EditIcon />
+							</Button>
+						}
 					</div>
 
 					<p className={cx('content')}>{data.content}</p>

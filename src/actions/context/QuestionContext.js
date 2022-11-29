@@ -20,6 +20,12 @@ const QuestionContextProvider = ({ children }) => {
 		questionsLoading: true
 	})
 
+	const [toastQuestion, setToastQuestion] = useState({
+		showToastQuestion: false,
+		messageQuestion: '',
+		typeToastQuestion: null
+	})
+
 	//Get Questions
 	const getQuestions = async () => {
 		try {
@@ -29,7 +35,7 @@ const QuestionContextProvider = ({ children }) => {
 				return response.data
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageQuestion: 'server error' }
 		}
 	}
 
@@ -43,7 +49,7 @@ const QuestionContextProvider = ({ children }) => {
 				return response.data;
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageQuestion: 'server error' }
 		}
 
 	}
@@ -75,7 +81,7 @@ const QuestionContextProvider = ({ children }) => {
 				return response.data
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageQuestion: 'server error' }
 		}
 	}
 
@@ -96,6 +102,8 @@ const QuestionContextProvider = ({ children }) => {
 		findQuestionId,
 		showUpdateQuestionModal,
 		setShowUpdateQuestionModal,
+		toastQuestion,
+		setToastQuestion,
 	}
 
 	return (

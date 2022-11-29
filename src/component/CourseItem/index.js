@@ -1,4 +1,6 @@
+import { AuthContext } from '~/actions/context/AuthContext';
 import { CategoryContext } from '~/actions/context/CategoryContext';
+import { CourseContext } from '~/actions/context/CourseContext';
 import { UserContext } from '~/actions/context/UserContext';
 import { useContext, useEffect } from 'react';
 import { CardMedia } from "@material-ui/core";
@@ -8,14 +10,24 @@ import styles from "./CourseItem.module.scss"
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import images from '~/assets/images';
+import EditIcon from '@material-ui/icons/Edit';
 
 const cx = classNames.bind(styles)
 
 function CourseItem({ data }) {
 
 	const {
+		authState: { user: {role} },
+	} = useContext(AuthContext)
+
+	const {
 		categoryState: { categories },
+		getCategories
 	} = useContext(CategoryContext)
+
+	useEffect(() => {
+		getCategories()
+	}, [])
 
 	const {
 		userState: { users },
@@ -25,6 +37,16 @@ function CourseItem({ data }) {
 	useEffect(() => {
 		getUser()
 	}, [])
+
+	const {
+		findCourseId,
+		setShowUpdateCourseModal,
+	} = useContext(CourseContext)
+
+	const chooseCourse = courseId => {
+		findCourseId(courseId)
+		setShowUpdateCourseModal(true)
+	}
 
 	return (
 		<Fragment>
@@ -37,6 +59,12 @@ function CourseItem({ data }) {
 							Learn now
 						</Button>
 					</Link>
+
+					{role === 'admin' && 
+						<Button className={cx('button_edit')} onClick={chooseCourse.bind(this, data._id)}>
+							<EditIcon />
+						</Button>
+					}
 					
 				</div>
 

@@ -73,6 +73,14 @@ function ManageCourse({ data }) {
 						})}
 					</div>
 				</div>
+
+				<div className={cx('status')}>
+					<span className={cx('status-title')}>Status:</span>
+					{data.status === 'Hide' ? 
+						<span className={cx('status-color-hide')}>{data.status}</span>
+						: <span className={cx('status-color-public')}>{data.status}</span>
+					}
+				</div>
 			</div>
 
 		</Fragment>

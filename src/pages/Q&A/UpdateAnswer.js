@@ -21,8 +21,7 @@ const UpdateAnswer = () => {
 		updateAnswer,
 		showUpdateAnswerModal,
 		setShowUpdateAnswerModal,
-		// showToast: { show, message, type },
-		// setShowToast
+		setToastAnswer
 	} = useContext(AnswerContext)
 
 	// State
@@ -30,7 +29,7 @@ const UpdateAnswer = () => {
 
 	useEffect(() => setUpdatedAnswer(answer), [answer])
 
-	const { title, isTrue, question } = updatedAnswer
+	const { title, isTrue, questionId } = updatedAnswer
 
 	const onUpdateAnswer = (e) =>
 		setUpdatedAnswer({ ...updatedAnswer, [e.target.name]: e.target.value })
@@ -42,9 +41,9 @@ const UpdateAnswer = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await updateAnswer(updatedAnswer)
+		const { success, messageAnswer } = await updateAnswer(updatedAnswer)
 		setShowUpdateAnswerModal(false)
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setToastAnswer({ showToastAnswer: true, messageAnswer, typeToastAnswer: success ? 'success' : 'danger' })
 	}
 
 	return (
@@ -80,22 +79,6 @@ const UpdateAnswer = () => {
 						>
 							<option value="true" key="true">True</option>
 							<option value="false" key="false">False</option>
-						</Form.Control>
-
-					</Form.Group><br />
-
-					<Form.Group>
-
-						<Form.Control
-							as='select'
-							name='question'
-							value={question}
-							onChange={onUpdateAnswer}
-							disabled
-						>
-							{questions.map((question) => (
-								<option value={question._id} key={question._id}>{question.title}</option>
-							))}
 						</Form.Control>
 
 					</Form.Group><br />

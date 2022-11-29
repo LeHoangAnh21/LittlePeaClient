@@ -22,6 +22,7 @@ const AddCourseModal = () => {
 		showAddCourseModal, 
 		setShowAddCourseModal, 
 		addCourse,
+		setShowToast
 	} = useContext(CourseContext)
 
 	// State
@@ -30,9 +31,10 @@ const AddCourseModal = () => {
 		description: '',
 		image: '',
 		category: '',
+		status: 'Hide'
 	})
 
-	const { name, description, image, category } = newCourse
+	const { name, description, image, category, status } = newCourse
 
 	const onChangeNewCourse = (e) =>
 		setNewCourse({ ...newCourse, [e.target.name]: e.target.value })
@@ -45,11 +47,11 @@ const AddCourseModal = () => {
 		event.preventDefault()
 		const { success, message } = await addCourse(newCourse)
 		resetAddCourseData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddCourseData = () => {
-		setNewCourse({ name: '', description: '', image: '', category: '' })
+		setNewCourse({ name: '', description: '', image: '', category: '', status: 'Hide' })
 		setShowAddCourseModal(false)
 	}
 

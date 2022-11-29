@@ -21,8 +21,7 @@ const UpdateLesson = () => {
 		updateLesson,
 		showUpdateLessonModal,
 		setShowUpdateLessonModal,
-		// showToast: { show, message, type },
-		// setShowToast
+		setShowToast
 	} = useContext(LessonContext)
 
 	// State
@@ -44,7 +43,7 @@ const UpdateLesson = () => {
 		event.preventDefault()
 		const { success, message } = await updateLesson(updatedLesson)
 		setShowUpdateLessonModal(false)
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	console.log(lesson._id);

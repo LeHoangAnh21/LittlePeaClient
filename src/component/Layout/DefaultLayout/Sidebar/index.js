@@ -4,26 +4,13 @@ import styles from './Sidebar.module.scss'
 import HomeIcon from '@material-ui/icons/Home';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import CategoryIcon from '@material-ui/icons/Category';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import WorkIcon from '@material-ui/icons/Work';
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { AuthContext } from '~/actions/context/AuthContext';
 
 const cx = classNames.bind(styles);
-
-// // sidebarItem.forEach((btn) => {
-// // 	btn.addEventListener('click', (e) => {
-// // 		btn.classList.add('active')
-// // 	})
-// // })
-
-// const handleActive = (e) => {
-// 	sidebarItem.forEach((btn) => {
-// 		console.log(btn.target);
-// 		btn.classList.remove(cx('active'));
-// 	})
-// 	e.target.classList.add(cx('active'));
-// }
 
 function Sidebar() {
 
@@ -63,12 +50,23 @@ function Sidebar() {
 				</li>
 
 				{role === 'admin' &&
-					<li>
-						<NavLink to={`/category`} className={(nav) => cx('sidebar-item', { active: nav.isActive })}>
-							<CategoryIcon />
-							<span>Category</span>
-						</NavLink>
-					</li>
+					<Fragment>
+						<li>
+							<NavLink to={`/category`} className={(nav) => cx('sidebar-item', { active: nav.isActive })}>
+								<CategoryIcon />
+								<span>Category</span>
+							</NavLink>
+						</li>
+	
+						<li>
+							<NavLink to={`/manage-acc-recruitment`} className={(nav) => cx('sidebar-item', { active: nav.isActive })}>
+								<AccountCircleIcon />
+								<span>Manage</span>
+								<span>Account</span>
+								<span>Employer</span>
+							</NavLink>
+						</li>
+					</Fragment>
 				}
 			</ul>
 		</div>

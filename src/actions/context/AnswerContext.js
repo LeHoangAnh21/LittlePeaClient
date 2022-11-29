@@ -20,6 +20,12 @@ const AnswerContextProvider = ({ children }) => {
 		answersLoading: true
 	})
 
+	const [toastAnswer, setToastAnswer] = useState({
+		showToastAnswer: false,
+		messageAnswer: '',
+		typeToastAnswer: null
+	})
+
 	//Get Answers
 	const getAnswer = async () => {
 		try {
@@ -29,7 +35,7 @@ const AnswerContextProvider = ({ children }) => {
 				return response.data
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageAnswer: 'server error' }
 		}
 	}
 
@@ -43,7 +49,7 @@ const AnswerContextProvider = ({ children }) => {
 				return response.data;
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageAnswer: 'server error' }
 		}
 
 	}
@@ -76,14 +82,13 @@ const AnswerContextProvider = ({ children }) => {
 				return response.data
 			}
 		} catch (err) {
-			return err.response.data ? err.response.data : { success: false, message: 'server error' }
+			return err.response.data ? err.response.data : { success: false, messageAnswer: 'server error' }
 		}
 	}
 
 	const [showAddAnswerModal, setShowAddAnswerModal] = useState(false);
 	const [showDeleteAnswerModal, setShowDeleteAnswerModal] = useState(false);
 	const [showUpdateAnswerModal, setShowUpdateAnswerModal] = useState(false);
-	// const [viewAnswerId, setViewAnswerId] = useState('');
 
 	const answerContextData = {
 		answerState,
@@ -98,8 +103,8 @@ const AnswerContextProvider = ({ children }) => {
 		findAnswerId,
 		showUpdateAnswerModal,
 		setShowUpdateAnswerModal,
-		// setViewAnswerId,
-		// viewAnswerId,
+		toastAnswer,
+		setToastAnswer,
 	}
 
 	return (

@@ -23,3 +23,30 @@
 	right: 100px;
 }
 
+.status-approved {
+	background-color: rgb(119, 222, 119);
+	padding: 10px 20px;
+	border-radius: 20px;
+}
+
+.status-expired {
+	background-color: rgb(248, 142, 118);
+	padding: 10px 20px;
+	border-radius: 20px;
+}
+
+.status-blocked {
+	background-color: rgb(254, 49, 3);
+	padding: 10px 20px;
+	border-radius: 20px;
+}
+
+.status-waiting {
+	background-color: rgb(254, 216, 3);
+	padding: 10px 20px;
+	border-radius: 20px;
+}
+
+.status-title {
+	color: #fff;
+}

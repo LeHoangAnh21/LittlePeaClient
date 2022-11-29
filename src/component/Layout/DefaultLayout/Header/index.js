@@ -1,9 +1,7 @@
-
 import { useContext } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss'
-import Search from '../Search';
 import images from '~/assets/images';
 import { AuthContext } from '~/actions/context/AuthContext';
 import { CardMedia } from '@material-ui/core';
@@ -15,7 +13,7 @@ const cx = classNames.bind(styles)
 function Header() {
 
 	const {
-		authState: {user: {username, avatar}},
+		authState: {user: { _id, username, avatar }},
 		logoutAccount,
 	} = useContext(AuthContext)
 
@@ -30,8 +28,6 @@ function Header() {
 		<div className={cx('header')}>
 			
 			<img src={images.logo} alt="" className={cx('logo')} />
-
-			<Search />
 		
 			<div className={cx('option')}>
 

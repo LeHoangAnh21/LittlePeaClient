@@ -5,7 +5,7 @@ import { Fragment, useContext, useEffect, useState } from 'react';
 import LessonItem from '~/component/LessonItem';
 import classNames from 'classnames/bind';
 import styles from './Lesson.module.scss'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import TestItem from '~/component/TestItem';
 import Button from 'react-bootstrap/Button';
 
@@ -23,12 +23,14 @@ function Lesson() {
 	const [showTest, setShowTest] = useState(false)
 
 	let intro = null
+	let posterId = null
 
 	if(courses !== null){
 		intro = (
 			<div className={cx('intro')}>
 				{courses.map((course) => {
 					if(courseId === course._id){
+						posterId = course.user
 						return (
 							<Fragment>
 								<div className={cx('title_course')}>
@@ -38,13 +40,21 @@ function Lesson() {
 									<span>{course.description || 'None'}</span>
 								</div>
 								<div className={cx('option')}>
-
-									<Button
-										className={cx('add-lesson')}
-										onClick={() => setShowTest(true)}
-									>
-										Completed
-									</Button>
+									{showTest === false ? 
+										<Button
+											className={cx('add-lesson')}
+											onClick={() => setShowTest(true)}
+										>
+											Completed
+										</Button>
+										:
+										<Button
+											className={cx('add-lesson')}
+											onClick={() => setShowTest(false)}
+										>
+											Back
+										</Button>
+									}
 
 								</div>
 							</Fragment>
@@ -143,16 +153,65 @@ function Lesson() {
 		}
 	}
 
+	let offer = null
+	let offerList = []
 
+	console.log(posterId);
+
+	if (courses !== null && posterId !== null) {
+		courses.map((course) => {
+			if (course.user === posterId && course._id !== courseId && course.status === 'Public'){
+				offerList.push(course)
+			}
+		})
+	}
+
+	if (offerList.length !== 0) {
+		offer = (
+			<div className={cx('offer')}>
+				<span className={cx('offer-title')}>Courses with the same author:</span>
+
+				{offerList.map(offerListItem => {
+					return (
+						<Link to={`/courses/${offerListItem._id}`}>
+							<span className={cx('offer-course-title')}>{offerListItem.name}</span>
+						</Link>
+					)
+				})}
+			</div>
+		)
+	} else {
+		offer = (
+			<div className={cx('offer')}>
+				<span className={cx('offer-title')}>Courses with the same author:</span>
+				<span className={cx('offer-course-title')}>The author has no other courses.</span>
+			</div>
+		)
+	}
 
 	return (
 		<div>
 
-			{intro}
+			{courses !== null && courses.map(course => {
+				if (courseId === course._id){
+					if(course.status === 'Public'){
+						return (
+							<div>
+								{intro}
+					
+								{body}
+					
+								{testBody}
+					
+								{offer}
+							</div>
+						)
+					} else {
+						return <h1>This course has been hidden or deleted!</h1>
+					}
+				}
+			})}
 
-			{body}
-
-			{testBody}
 
 		</div>
 	);

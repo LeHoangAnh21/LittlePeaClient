@@ -29,6 +29,8 @@ export const DELETE_BLOG = 'DELETE_BLOG'
 export const UPDATE_BLOG = 'UPDATE_BLOG'
 export const FIND_BLOG_ID = 'FIND_BLOG_ID'
 export const LIKE_BLOG = 'LIKE_BLOG'
+export const UN_LIKE_BLOG = 'UN_LIKE_BLOG'
+export const SEARCH_BLOG = 'SEARCH_BLOG'
 
 //Recruitment constant
 export const GET_RECRUITMENT = 'GET_RECRUITMENT'
@@ -68,7 +70,7 @@ export const FIND_ANSWER_ID = 'FIND_ANSWER_ID'
 export const GET_USER = 'GET_USER'
 export const DELETE_USER = 'DELETE_USER'
 export const FIND_USER_ID = 'FIND_USER_ID'
-// export const UPDATE_USER = 'UPDATE_USER'
+export const UPDATE_USER = 'UPDATE_USER'
 
 //Comment constant
 export const GET_COMMENT = 'GET_COMMENT'
@@ -83,3 +85,8 @@ export const ADD_SUB_COMMENT = 'ADD_SUB_COMMENT'
 export const DELETE_SUB_COMMENT = 'DELETE_SUB_COMMENT'
 export const UPDATE_SUB_COMMENT = 'UPDATE_SUB_COMMENT'
 export const FIND_SUB_COMMENT_ID = 'FIND_SUB_COMMENT_ID'
+
+//Point constant
+export const GET_POINT = 'GET_POINT'
+export const ADD_POINT = 'ADD_POINT'
+export const FIND_POINT_ID = 'FIND_POINT_ID'

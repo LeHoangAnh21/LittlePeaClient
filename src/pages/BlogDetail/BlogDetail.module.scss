@@ -102,3 +102,20 @@
 	padding: 30px 10px;
 }
 
+.offer {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+}
+
+.offer-title {
+	font-weight: bold;
+	font-size: 1.5rem;
+	color: #333;
+}
+
+.offer-blog-title {
+	margin-left: 15px;
+	font-style: italic;
+	color: #333;
+}

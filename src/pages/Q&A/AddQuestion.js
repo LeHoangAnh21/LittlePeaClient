@@ -25,16 +25,28 @@ const AddQuestionModal = () => {
 		showAddQuestionModal, 
 		setShowAddQuestionModal, 
 		addQuestion,
+		setToastQuestion	
 	} = useContext(QuestionContext)
+
+	let testId
+
+	tests.map(test => {
+		if (test.course === courseId) {
+			testId = test._id
+		}
+	})
 
 	// State
 
 	const [newQuestion, setNewQuestion] = useState({
 		title: '',
-		test: '',
+		test: testId,
 	})
 
+	useEffect(() => setNewQuestion({ title: '', test: testId }), [testId])
+	
 	const { title, test } = newQuestion
+	// console.log(test);
 
 	const onChangeNewQuestion = (e) =>
 		setNewQuestion({ ...newQuestion, [e.target.name]: e.target.value })
@@ -45,24 +57,15 @@ const AddQuestionModal = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addQuestion(newQuestion)
+		const { success, messageQuestion } = await addQuestion(newQuestion)
 		resetAddQuestionData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setToastQuestion({ showToastQuestion: true, messageQuestion, typeToastQuestion: success ? 'success' : 'danger' })
 	}
 
 	const resetAddQuestionData = () => {
-		setNewQuestion({ title: '', test: '', })
+		setNewQuestion({ title: '', test: testId, })
 		setShowAddQuestionModal(false)
 	}
-
-	const testList = [];
-
-	// eslint-disable-next-line no-lone-blocks
-	{tests.map(test => {
-		if (test.course === courseId) {
-			testList.push(test)
-		}
-	})}
 
 	return (
 		<Modal show={showAddQuestionModal} onHide={closeModal}>
@@ -84,22 +87,6 @@ const AddQuestionModal = () => {
 							value={title}
 							onChange={onChangeNewQuestion}
 						/>
-
-					</Form.Group><br />
-
-					<Form.Group>
-
-						<Form.Control
-							as='select'
-							name='test'
-							value={test}
-							onChange={onChangeNewQuestion}
-						>
-							<option>Choose Test</option>
-							{testList.map((test) => (
-								<option value={test._id} key={test._id}>{test.title}</option>
-							))}
-						</Form.Control>
 
 					</Form.Group><br />
 

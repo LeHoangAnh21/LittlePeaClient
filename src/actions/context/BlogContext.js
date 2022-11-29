@@ -8,7 +8,9 @@ import {
 	DELETE_BLOG,
 	UPDATE_BLOG,
 	FIND_BLOG_ID,
-	LIKE_BLOG
+	LIKE_BLOG,
+	UN_LIKE_BLOG,
+	SEARCH_BLOG
 } from './constant';
 
 export const BlogContext = createContext()
@@ -19,6 +21,12 @@ const BlogContextProvider = ({ children }) => {
 		blog: null,
 		blogs: [],
 		blogsLoading: true
+	})
+
+	const [showToast, setShowToast] = useState({
+		show: false,
+		message: '',
+		type: null
 	})
 
 	//Get blogs
@@ -91,10 +99,20 @@ const BlogContextProvider = ({ children }) => {
 		}
 	}
 
+	const unlikeBlog = async blogId => {
+		try {
+			const response = await axios.put(`${apiURL}/blog/${blogId}/unlike`);
+			if (response.data.success) {
+				dispatch({ type: UN_LIKE_BLOG, payload: response.data.blog })
+			}
+		} catch (error) {
+			console.log(error.message);
+		}
+	}
+
 	const [showAddBlogModal, setShowAddBlogModal] = useState(false);
 	const [showDeleteBlogModal, setShowDeleteBlogModal] = useState(false);
 	const [showUpdateBlogModal, setShowUpdateBlogModal] = useState(false);
-	const [viewBlogId, setViewBlogId] = useState('');
 
 	const blogContextData = {
 		blogState,
@@ -110,6 +128,9 @@ const BlogContextProvider = ({ children }) => {
 		showUpdateBlogModal,
 		setShowUpdateBlogModal,
 		likeBlog,
+		unlikeBlog,
+		showToast,
+		setShowToast,
 	}
 
 	return (

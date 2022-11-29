@@ -21,8 +21,7 @@ const UpdateTest = () => {
 		updateTest,
 		showUpdateTestModal,
 		setShowUpdateTestModal,
-		// showToast: { show, message, type },
-		// setShowToast
+		setToastTest
 	} = useContext(TestContext)
 
 	// State
@@ -42,9 +41,9 @@ const UpdateTest = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await updateTest(updatedTest)
+		const { success, messageToastTest } = await updateTest(updatedTest)
 		setShowUpdateTestModal(false)
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setToastTest({ showToastTest: true, messageToastTest, typeToastTest: success ? 'success' : 'danger' })
 	}
 
 	return (

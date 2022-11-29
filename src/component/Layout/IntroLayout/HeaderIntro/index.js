@@ -21,7 +21,7 @@ function HeaderIntro() {
 			<img src={images.logo} alt="LittlePea" className={cx('logo')} />
 
 			<div className={cx('slogan')}>
-				<span>LittlePea - Technology is key of life</span>
+				<span>LittlePea - Technology is the key to success</span>
 			</div>
 
 			<div className={cx('button')}>

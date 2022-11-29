@@ -21,11 +21,23 @@
 .list_applications {
 	display: flex;
 	flex-wrap: wrap;
-	// flex-direction: column;
 }
 
 .btn-floating {
 	position: fixed;
 	bottom: 80px;
 	right: 100px;
+}
+
+.option {
+	display: flex;
+	align-items: center;
+	background-color: #ededed;
+	padding: 10px 15px;
+	border-radius: 30px;
+	margin-bottom: 15px;
+}
+
+.button_learn {
+	margin: 0 10px;
 }

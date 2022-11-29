@@ -139,23 +139,12 @@ function ManageBlogItem({ data }) {
 					
 				</div>
 
-				<div className={cx('blogger')}>
-					{users.map((user) => {
-						if (user._id === data.user) {
-							return (
-								<Fragment>
-									{!user.avatar ?
-										<img src={images.avatarDefault} alt="" className={cx('blogger-avatar')} />
-										: <CardMedia image={user.avatar} title='avatar' className={cx('blogger-avatar')} />
-									}
-									{!user.fullname ?
-										<span className={cx('blogger-fullname')}>{user.role}</span>
-										: <span className={cx('blogger-fullname')}>{user.fullname}</span>
-									}
-								</Fragment>
-							)
-						}
-					})}
+				<div className={cx('status')}>
+					<span className={cx('status-title')}>Status:</span>
+					{data.status === 'Hide' ?
+						<span className={cx('status-color-hide')}>{data.status}</span>
+						: <span className={cx('status-color-public')}>{data.status}</span>
+					}
 				</div>
 			</div>
 

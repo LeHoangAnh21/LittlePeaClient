@@ -18,8 +18,10 @@ import AnswerContextProvider from './actions/context/AnswerContext'
 import UserContextProvider from './actions/context/UserContext'
 import CommentContextProvider from './actions/context/CommentContext'
 import SubCommentContextProvider from './actions/context/SubCommentContext'
+import PointContextProvider from './actions/context/PointContext'
 import { AuthContext } from './actions/context/AuthContext'
 import Spinner from 'react-bootstrap/Spinner'
+import ScrollOnTop from './actions/utils/scroll'
 
 function App() {
 
@@ -59,9 +61,11 @@ function App() {
       <SubCommentContextProvider>
       <AnswerContextProvider>
       <TestContextProvider>
+      <PointContextProvider>
       <QuestionContextProvider>
         <Router>
           <div className="App" >
+      <ScrollOnTop>
             <Routes>
               {privateRoutes.map((route, index) => {
                 const Page = route.component;
@@ -78,9 +82,11 @@ function App() {
               <Route path={Path} element={<LayoutIntro> <PageIntro /> </LayoutIntro>} />
 
             </Routes>
+    </ScrollOnTop>
           </div>
         </Router>
       </QuestionContextProvider>
+      </PointContextProvider>
       </TestContextProvider>
       </AnswerContextProvider>
       </SubCommentContextProvider>

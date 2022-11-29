@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import FileBase64 from 'react-file-base64';
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState, useEffect, Fragment } from 'react'
 import { RecruitmentContext } from '~/actions/context/RecruitmentContext'
 import { CategoryContext } from '~/actions/context/CategoryContext';
 
@@ -21,6 +21,7 @@ const AddRecruitmentModal = () => {
 		showAddRecruitmentModal,
 		setShowAddRecruitmentModal,
 		addRecruitment,
+		setShowToast	
 	} = useContext(RecruitmentContext)
 
 	// State
@@ -37,6 +38,7 @@ const AddRecruitmentModal = () => {
 		deadline: '',
 		location: '',
 		category: '',
+		status: 'Public',
 		image: '' 
 	})
 
@@ -53,6 +55,7 @@ const AddRecruitmentModal = () => {
 		deadline,
 		location,
 		category,
+		status,
 		image 
 	} = newRecruitment
 
@@ -67,7 +70,7 @@ const AddRecruitmentModal = () => {
 		event.preventDefault()
 		const { success, message } = await addRecruitment(newRecruitment)
 		resetAddRecruitmentData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddRecruitmentData = () => {
@@ -84,6 +87,7 @@ const AddRecruitmentModal = () => {
 			deadline: '',
 			location: '',
 			category: '',
+			status: 'Public',
 			image: ''
 		})
 		setShowAddRecruitmentModal(false)
@@ -91,208 +95,210 @@ const AddRecruitmentModal = () => {
 
 	return (
 		<Modal show={showAddRecruitmentModal} onHide={closeModal}>
+			<Fragment>
+				<Modal.Header closeButton>
+					<Modal.Title>ADD Recruitment</Modal.Title>
+				</Modal.Header>
 
-			<Modal.Header closeButton>
-				<Modal.Title>ADD Recruitment</Modal.Title>
-			</Modal.Header>
+				<Form onSubmit={onSubmit} >
+					<Modal.Body>
+						<Form.Group>
 
-			<Form onSubmit={onSubmit} >
-				<Modal.Body>
-					<Form.Group>
+							<Form.Control
+								type='text'
+								placeholder='Title (*Required)'
+								name='title'
+								required
+								aria-describedby='title-help'
+								value={title}
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							type='text'
-							placeholder='Title (*Required)'
-							name='title'
-							required
-							aria-describedby='title-help'
-							value={title}
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								type='text'
+								placeholder='Company'
+								name='company'
+								required
+								aria-describedby='title-help'
+								value={company}
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							type='text'
-							placeholder='Company'
-							name='company'
-							required
-							aria-describedby='title-help'
-							value={company}
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Label>Avatar of your company</Form.Label>
 
-						<Form.Label>Avatar of your company</Form.Label>
+							<FileBase64
+								accept='image/*'
+								multiple={false}
+								type='file'
+								value={avatarCompany}
+								onDone={({ base64 }) => setNewRecruitment({ ...newRecruitment, avatarCompany: base64 })}
+							/>
 
-						<FileBase64
-							accept='image/*'
-							multiple={false}
-							type='file'
-							value={avatarCompany}
-							onDone={({ base64 }) => setNewRecruitment({ ...newRecruitment, avatarCompany: base64 })}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								as='textarea'
+								rows={5}
+								placeholder='Job Description'
+								name='jobDescription'
+								value={jobDescription}
+								required
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							as='textarea'
-							rows={5}
-							placeholder='Job Description'
-							name='jobDescription'
-							value={jobDescription}
-							required
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								as='textarea'
+								rows={5}
+								placeholder='Requirements for Candidates'
+								name='requirementsCandidates'
+								value={requirementsCandidates}
+								required
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							as='textarea'
-							rows={5}
-							placeholder='Requirements for Candidates'
-							name='requirementsCandidates'
-							value={requirementsCandidates}
-							required
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								as='textarea'
+								rows={5}
+								placeholder='Benefits for Candidates'
+								name='benefitsCandidates'
+								value={benefitsCandidates}
+								required
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							as='textarea'
-							rows={5}
-							placeholder='Benefits for Candidates'
-							name='benefitsCandidates'
-							value={benefitsCandidates}
-							required
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								type='text'
+								placeholder='Salary'
+								name='salary'
+								aria-describedby='title-help'
+								value={salary}
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							type='text'
-							placeholder='Salary'
-							name='salary'
-							aria-describedby='title-help'
-							value={salary}
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								type='number'
+								placeholder='Number of Recruiting'
+								name='numberRecruiting'
+								aria-describedby='title-help'
+								value={numberRecruiting}
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							type='number'
-							placeholder='Number of Recruiting'
-							name='numberRecruiting'
-							aria-describedby='title-help'
-							value={numberRecruiting}
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								type='text'
+								placeholder='Experience'
+								name='experience'
+								aria-describedby='title-help'
+								value={experience}
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							type='text'
-							placeholder='Experience'
-							name='experience'
-							aria-describedby='title-help'
-							value={experience}
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								type='date'
+								placeholder='Application deadline'
+								name='deadline'
+								aria-describedby='title-help'
+								value={deadline}
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							type='date'
-							placeholder='Application deadline'
-							name='deadline'
-							aria-describedby='title-help'
-							value={deadline}
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Control
+								type='text'
+								placeholder='Location'
+								name='location'
+								aria-describedby='title-help'
+								value={location}
+								onChange={onChangeNewRecruitment}
+							/>
 
-						<Form.Control
-							type='text'
-							placeholder='Location'
-							name='location'
-							aria-describedby='title-help'
-							value={location}
-							onChange={onChangeNewRecruitment}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+						<Form.Group>
+							<Form.Control
+								as='select'
+								value={category}
+								name='category'
+								onChange={onChangeNewRecruitment}
+							>
+								<option>Category</option>
+								{categories.map((category) => (
+									<option value={category._id} key={category._id}>{category.title}</option>
+								))}
 
-					<Form.Group>
-						<Form.Control
-							as='select'
-							value={category}
-							name='category'
-							onChange={onChangeNewRecruitment}
-						>
-							<option>Category</option>
-							{categories.map((category) => (
-								<option value={category._id} key={category._id}>{category.title}</option>
-							))}
+							</Form.Control>
+						</Form.Group> <br />
 
-						</Form.Control>
-					</Form.Group> <br />
+						<Form.Group>
 
-					<Form.Group>
+							<Form.Label>Image for your post</Form.Label>
 
-						<Form.Label>Image for your post</Form.Label>
+							<FileBase64
+								accept='image/*'
+								multiple={false}
+								type='file'
+								value={image}
+								onDone={({ base64 }) => setNewRecruitment({ ...newRecruitment, image: base64 })}
+							/>
 
-						<FileBase64
-							accept='image/*'
-							multiple={false}
-							type='file'
-							value={image}
-							onDone={({ base64 }) => setNewRecruitment({ ...newRecruitment, image: base64 })}
-						/>
+						</Form.Group> <br />
 
-					</Form.Group> <br />
+					</Modal.Body>
 
-				</Modal.Body>
+					<Modal.Footer>
 
-				<Modal.Footer>
+						<Button variant='secondary' onClick={closeModal} >
+							Cancel
+						</Button>
 
-					<Button variant='secondary' onClick={closeModal} >
-						Cancel
-					</Button>
+						<Button variant='primary' type='submit'>
+							Post
+						</Button>
 
-					<Button variant='primary' type='submit'>
-						Post
-					</Button>
+					</Modal.Footer>
 
-				</Modal.Footer>
-
-			</Form>
+				</Form>
+			</Fragment>
 
 		</Modal>
+			
 	)
 }
 

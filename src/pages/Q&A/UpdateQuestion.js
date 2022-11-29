@@ -21,8 +21,7 @@ const UpdateQuestion = () => {
 		updateQuestion,
 		showUpdateQuestionModal,
 		setShowUpdateQuestionModal,
-		// showToast: { show, message, type },
-		// setShowToast
+		setToastQuestion
 	} = useContext(QuestionContext)
 
 	// State
@@ -42,9 +41,9 @@ const UpdateQuestion = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await updateQuestion(updatedQuestion)
+		const { success, messageQuestion } = await updateQuestion(updatedQuestion)
 		setShowUpdateQuestionModal(false)
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setToastQuestion({ showToastQuestion: true, messageQuestion, typeToastQuestion: success ? 'success' : 'danger' })
 	}
 
 	return (

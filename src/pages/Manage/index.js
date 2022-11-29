@@ -1,17 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useEffect, useContext } from 'react';
 import { CourseContext } from '~/actions/context/CourseContext';
 import { AuthContext } from '~/actions/context/AuthContext';
-import { LessonContext } from '~/actions/context/LessonContext';
 import ManageCourse from '~/component/ManageCourse';
 import UpdateCourse from './UpdateCourse';
 import classNames from 'classnames/bind';
 import styles from './Manage.module.scss'
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 import Button from 'react-bootstrap/Button';
 import DeleteCourseModal from './DeleteCourse';
+import AddCourseModal from '../Courses/AddCourse';
+import { Toast } from 'react-bootstrap';
 
 const cx = classNames.bind(styles)
 
@@ -22,23 +21,33 @@ function Manage() {
 	} = useContext(AuthContext)
 
 	const {
-		courseState: { course, courses, coursesLoading },
-		// showToast: { show, message, type },
-		// setShowToast
+		courseState: { course, courses },
+		setShowAddCourseModal,
+		getCourses,
+		showToast: { show, message, type },
+		setShowToast	
 	} = useContext(CourseContext)
 
-	const {
-		setShowAddLessonModal,
-	} = useContext(LessonContext)
+	useEffect(() => {
+		getCourses()
+	}, [])
 
 	let body = null
+
+	const YourCourse = []
+
+	courses.map(course => {
+		if (course.user === _id){
+			YourCourse.push(course)
+		}
+	})
 
 	if(role !== 'creator') {
 		body = (
 			<h1>Access denied</h1>
 		)
 	}else{
-		if (courses.length === 0) {
+		if (YourCourse.length === 0) {
 			body = (
 				<Fragment>
 					<p className={cx('header_courses')}>LIST YOUR COURSES</p>
@@ -49,21 +58,10 @@ function Manage() {
 			body = (
 				<Fragment>
 					<p className={cx('header_courses')}>LIST YOUR COURSES</p>
-					<div className={cx('option')}>
 
-						<Button
-							className={cx('add-lesson')}
-							onClick={setShowAddLessonModal.bind(this, true)}
-						>
-							Add Lesson
-						</Button>
-
-					</div>
 					<div className={cx('list_courses')}>
-						{courses.map((course) => {
-							if(course.user === _id){
-								return <ManageCourse key={course._id} data={course} />
-							}
+						{YourCourse.map((course) => {
+							return <ManageCourse key={course._id} data={course} />
 						})}
 					</div>
 				</Fragment>
@@ -78,6 +76,21 @@ function Manage() {
 	
 					{body}
 
+					{role === 'creator' &&
+						<Fragment>
+							<Fragment>
+								<Button
+									className={cx('btn-floating')}
+									onClick={setShowAddCourseModal.bind(this, true)}
+								>
+									<AddIcon />
+								</Button>
+							</Fragment>
+
+							<AddCourseModal />
+						</Fragment>
+					}
+
 					{role === 'creator' && 
 						<Fragment>
 							{course !== null && <UpdateCourse />}
@@ -85,6 +98,23 @@ function Manage() {
 							{course !== null && <DeleteCourseModal />}
 						</Fragment>
 					}
+
+					<Toast
+						show={show}
+						style={{ position: 'fixed', top: '20%', right: '10px' }}
+						className={`bg-${type} text-white`}
+						onClose={setShowToast.bind(this, {
+							show: false,
+							message: '',
+							type: null
+						})}
+						delay={3000}
+						autohide
+					>
+						<Toast.Body>
+							<strong>{message}</strong>
+						</Toast.Body>
+					</Toast>
 
 				</div>
 		</Fragment>

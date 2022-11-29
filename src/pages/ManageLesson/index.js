@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import ManageLessonItem from '~/component/ManageLessonItem';
 import UpdateLesson from './UpdateLesson';
 import DeleteLessonModal from './DeleteLesson';
-import { Button } from 'react-bootstrap';
+import { Button, Toast } from 'react-bootstrap';
 import AddTestModal from '../ManageTest/AddTest';
 import ManagaTestItem from '~/component/ManageTestItem';
 import DeleteTestModal from '../ManageTest/DeleteTest';
@@ -34,6 +34,8 @@ function ManageLesson() {
 	const {
 		answerState: { answer, answers },
 		getAnswer,
+		toastAnswer: { showToastAnswer, messageAnswer, typeToastAnswer },
+		setToastAnswer
 	} = useContext(AnswerContext)
 
 	useEffect(() => {
@@ -46,6 +48,8 @@ function ManageLesson() {
 	const {
 		questionState: { question },
 		getQuestions,
+		toastQuestion: { showToastQuestion, messageQuestion, typeToastQuestion },
+		setToastQuestion
 	} = useContext(QuestionContext)
 
 	useEffect(() => {
@@ -91,24 +95,23 @@ function ManageLesson() {
 	const {
 		lessonState: { lesson, lessons },
 		getLessons,
-		// showToast: { show, message, type },
-		// setShowToast
+		setShowAddLessonModal,
+		showToast: { show, message, type },
+		setShowToast	
 	} = useContext(LessonContext)
 
 	useEffect(() => {
 		getLessons()
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	let body = null
 	let lessonList = []
 
-	// eslint-disable-next-line no-lone-blocks
-	{lessons.map((lesson) => {
+	lessons.map((lesson) => {
 		if (lesson.course === courseId) {
 			lessonList.push(lesson)
 		}
-	})}
+	})
 
 	if (lessonList.length === 0) {
 		body = (
@@ -134,6 +137,8 @@ function ManageLesson() {
 		testState: { test, tests },
 		setShowAddTestModal,
 		getTest,
+		toastTest: { showToastTest, messageToastTest, typeToastTest },
+		setToastTest
 	} = useContext(TestContext)
 
 	useEffect(() => {
@@ -143,12 +148,11 @@ function ManageLesson() {
 	let testBody = null;
 	let testList = [];
 
-	// eslint-disable-next-line no-lone-blocks
-	{tests.map((test) => {
+	tests.map((test) => {
 		if (test.course === courseId) {
 			testList.push(test)
 		}
-	})}
+	})
 
 	if (testList.length === 0) {
 		testBody = (
@@ -176,6 +180,23 @@ function ManageLesson() {
 	return (
 		<div>
 
+			<Toast
+				show={show}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				className={`bg-${type} text-white`}
+				onClose={setShowToast.bind(this, {
+					show: false,
+					message: '',
+					type: null
+				})}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{message}</strong>
+				</Toast.Body>
+			</Toast>
+
 			{courses.map(course => {
 
 				let userId = null
@@ -192,17 +213,47 @@ function ManageLesson() {
 
 								{role === 'creator' &&
 									<Fragment>
-										<div className={cx('option')}>
 
-											<Button
-												className={cx('add-test')}
-												onClick={setShowAddTestModal.bind(this, true)}
-												
-											>
-												Add Test
-											</Button>
+										{course.Test > 0 ?
+											<div className={cx('option')}>
 
-										</div>
+												<Button
+													className={cx('add-lesson')}
+													onClick={setShowAddLessonModal.bind(this, true)}
+												>
+													Add Lesson
+												</Button>
+
+												<Button
+													className={cx('add-test')}
+													onClick={setShowAddTestModal.bind(this, true)}
+													disabled
+												>
+													Add Test
+												</Button>
+
+												<span>You can only add 1 test.</span>
+
+											</div> : 
+											
+											<div className={cx('option')}>
+
+												<Button
+													className={cx('add-lesson')}
+													onClick={setShowAddLessonModal.bind(this, true)}
+												>
+													Add Lesson
+												</Button>
+
+												<Button
+													className={cx('add-test')}
+													onClick={setShowAddTestModal.bind(this, true)}
+												>
+													Add Test
+												</Button>
+
+											</div>
+										}
 
 										<div className={cx('body')}>
 											{body}
@@ -212,6 +263,8 @@ function ManageLesson() {
 										<div className={cx('body')}>
 											{testBody}
 										</div>
+
+										{/* <AddLesson /> */}
 
 										{lesson !== null && <UpdateLesson />}
 
@@ -229,7 +282,7 @@ function ManageLesson() {
 
 										{question !== null && <DeleteQuestionModal />}
 
-										{test !== null && <AddAnswerModal />}
+										{question !== null && <AddAnswerModal />}
 
 										{answer !== null && <UpdateAnswer />}
 
@@ -245,6 +298,73 @@ function ManageLesson() {
 
 			})}
 
+			<Toast
+				show={show}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				className={`bg-${type} text-white`}
+				onClose={setShowToast.bind(this, {
+					show: false,
+					message: '',
+					type: null
+				})}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{message}</strong>
+				</Toast.Body>
+			</Toast>
+
+			<Toast
+				show={showToastTest}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				className={`bg-${typeToastTest} text-white`}
+				onClose={setToastTest.bind(this, {
+					showToastTest: false,
+					messageToastTest: '',
+					typeToastTest: null
+				})}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{messageToastTest}</strong>
+				</Toast.Body>
+			</Toast>
+
+			<Toast
+				show={showToastQuestion}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				className={`bg-${typeToastQuestion} text-white`}
+				onClose={setToastQuestion.bind(this, {
+					showToastQuestion: false,
+					messageQuestion: '',
+					typeToastQuestion: null
+				})}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{messageQuestion}</strong>
+				</Toast.Body>
+			</Toast>
+
+			<Toast
+				show={showToastAnswer}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				className={`bg-${typeToastAnswer} text-white`}
+				onClose={setToastAnswer.bind(this, {
+					showToastAnswer: false,
+					messageAnswer: '',
+					typeToastAnswer: null
+				})}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{messageAnswer}</strong>
+				</Toast.Body>
+			</Toast>
 
 		</div>
 	);

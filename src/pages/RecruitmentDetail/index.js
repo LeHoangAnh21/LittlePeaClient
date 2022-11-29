@@ -13,9 +13,10 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import GroupIcon from '@material-ui/icons/Group';
 import WorkIcon from '@material-ui/icons/Work';
-import { Button } from 'react-bootstrap';
+import { Button, Toast } from 'react-bootstrap';
 import ApplyModal from '../ListCandidate/ApplyModal';
 import images from '~/assets/images';
+import moment from 'moment/moment';
 
 const cx = classNames.bind(styles)
 
@@ -27,6 +28,8 @@ function RecruitmentDetail() {
 
 	const {
 		setShowAddApplicationModal,
+		showToast: { show, message, type },
+		setShowToast	
 	} = useContext(ApplicationContext)
 
 	const {
@@ -60,8 +63,16 @@ function RecruitmentDetail() {
 				{recruitments.map((recruitment) => {
 					if (recruitmentId === recruitment._id) {
 						const deadlineDay = new Date(recruitment.deadline)
+						const current = new Date()
+
+						// const deadlineDate = moment(deadlineDay).format('YYYY-MM-DD')
+						// const currentDay = moment(current).format('YYYY-MM-DD')
+						// console.log(deadlineDate)
+						// console.log(currentDay)
+						// console.log(deadlineDate === currentDay)
+
 						let day = deadlineDay.getDate()
-						let month = deadlineDay.getMonth()
+						let month = deadlineDay.getMonth() + 1
 						let year = deadlineDay.getFullYear()
 						return (
 							<div>
@@ -86,11 +97,6 @@ function RecruitmentDetail() {
 											<div className={cx('button_apply')}>
 												<Button onClick={setShowAddApplicationModal.bind(this, true)}>
 													<span>Apply Now</span>
-												</Button>
-											</div>
-											<div className={cx('button_save')}>
-												<Button variant="outline-primary">
-													<span>Save</span>
 												</Button>
 											</div>
 										</div>
@@ -186,6 +192,23 @@ function RecruitmentDetail() {
 			{body}
 
 			<ApplyModal data={recruitmentId} />
+
+			<Toast
+				show={show}
+				style={{ position: 'fixed', top: '20%', right: '10px' }}
+				className={`bg-${type} text-white`}
+				onClose={setShowToast.bind(this, {
+					show: false,
+					message: '',
+					type: null
+				})}
+				delay={3000}
+				autohide
+			>
+				<Toast.Body>
+					<strong>{message}</strong>
+				</Toast.Body>
+			</Toast>
 
 		</div>
 	);

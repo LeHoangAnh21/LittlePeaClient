@@ -20,6 +20,12 @@ const CourseContextProvider = ({ children }) => {
 		coursesLoading: true
 	})
 
+	const [showToast, setShowToast] = useState({
+		show: false,
+		message: '',
+		type: null
+	})
+
 	//Get courses
 	const getCourses = async () => {
 		try {
@@ -97,8 +103,8 @@ const CourseContextProvider = ({ children }) => {
 		findCourseId,
 		showUpdateCourseModal,
 		setShowUpdateCourseModal,
-		// setViewCourseId,
-		// viewCourseId,
+		showToast,
+		setShowToast,
 	}
 
 	return (

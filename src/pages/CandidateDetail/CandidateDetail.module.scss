@@ -1,0 +1,100 @@
+.application-detail{
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.application-user {
+	width: 20%;
+	border-right: 0.3px solid #333;
+}
+
+.application-content {
+	width: 75%;
+	padding: 0 20px;
+}
+
+.recruitment-title {
+	max-width: 100%;
+	margin: 10px 30px 30px;
+	padding: 10px;
+}
+
+.avatar-component{
+	display: flex;
+	width: 100%;
+	margin: 0px 30px 30px;
+}
+
+.avatar {
+	width: 170px;
+	height: 170px;
+	border-radius: 50%;
+	object-fit: contain;
+}
+
+.application-info{
+	margin: 50px 30px 30px;
+	display: flex;
+	flex-direction: column;
+}
+
+.title-small{
+	font-size: 1.4rem;
+	color: #333;
+	font-weight: bold;
+	letter-spacing: 3px;
+	font-style: italic;
+	text-align: justify;
+}
+
+.title-big{
+	margin-top: 10px;
+	font-weight: bold;
+	font-size: 2rem;
+	text-decoration: none;
+}
+
+.application-cv{
+	width: 100%;
+	height: 130vh;
+}
+
+.cv{
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	cursor: pointer;
+}
+
+.application-cv-detail {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: 160vh;
+	margin: 0px 0px 40px;
+}
+
+.cv-detail {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	object-fit: contain;
+	cursor: pointer;
+}
+
+.application-description{
+	border: 2px solid #e8e8e8;
+	padding: 20px;
+	border-radius: 20px;
+	margin: 20px 0;
+}
+
+.description{
+	margin: 0;
+	text-align: justify;
+	text-indent: 20px;
+}

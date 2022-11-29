@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import FileBase64 from 'react-file-base64';
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import { ApplicationContext } from '~/actions/context/ApplicationContext'
 
 const ApplyModal = ({ data }) => {
@@ -11,6 +11,7 @@ const ApplyModal = ({ data }) => {
 		showAddApplicationModal,
 		setShowAddApplicationModal,
 		addApplication,
+		setShowToast
 	} = useContext(ApplicationContext)
 
 	// State
@@ -34,7 +35,7 @@ const ApplyModal = ({ data }) => {
 		event.preventDefault()
 		const { success, message } = await addApplication(newApplication)
 		resetAddApplicationData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddApplicationData = () => {
@@ -87,19 +88,6 @@ const ApplyModal = ({ data }) => {
 							value={imageCV}
 							onDone={({ base64 }) => setNewApplication({ ...newApplication, imageCV: base64 })}
 						// onChange={onChangeNewApplication}
-						/>
-
-					</Form.Group><br /><br />
-
-					<Form.Group style={{ display: 'none' }}>
-
-						<Form.Control
-							type='text'
-							name='recruitment'
-							aria-describedby='title-help'
-							value={recruitment}
-							onChange={onChangeNewApplication}
-							disabled
 						/>
 
 					</Form.Group><br /><br />

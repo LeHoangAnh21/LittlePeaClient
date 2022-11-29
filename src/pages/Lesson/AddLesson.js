@@ -4,10 +4,13 @@ import { AuthContext } from '~/actions/context/AuthContext';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import FileBase64 from 'react-file-base64';
+import { useParams } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react'
 
 const AddLesson = () => {
+
+	const { id } = useParams();
+	const courseId = id;
 
 	const {
 		authState: { user: { _id } },
@@ -24,20 +27,18 @@ const AddLesson = () => {
 
 	const courseList = []
 
-	// eslint-disable-next-line no-lone-blocks
-	{courses.map(course => {
+	courses.map(course => {
 		if(course.user === _id){
 			courseList.push(course)
 		}
-	})}
+	})
 
 	const {
 		getLessons,
 		showAddLessonModal,
 		setShowAddLessonModal,
 		addLesson,
-		// showToast: { show, message, type },
-		// setShowToast
+		setShowToast
 	} = useContext(LessonContext)
 
 	useEffect(() => {
@@ -49,8 +50,10 @@ const AddLesson = () => {
 		title: '',
 		description: '',
 		videoId: '',
-		course: '',
+		course: courseId,
 	})
+
+	useEffect(() => setNewLesson({ title: '', description: '', videoId: '', course: courseId }), [courseId])
 
 	const { title, description, videoId, course } = newLesson
 
@@ -65,11 +68,11 @@ const AddLesson = () => {
 		event.preventDefault()
 		const { success, message } = await addLesson(newLesson)
 		resetAddLessonData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
 	}
 
 	const resetAddLessonData = () => {
-		setNewLesson({ title: '', description: '', videoId: '', course: '' })
+		setNewLesson({ title: '', description: '', videoId: '', course: courseId })
 		setShowAddLessonModal(false)
 	}
 
@@ -121,21 +124,6 @@ const AddLesson = () => {
 						/>
 
 					</Form.Group><br />
-
-					<Form.Group>
-						<Form.Control
-							as='select'
-							value={course}
-							name='course'
-							onChange={onChangeNewLesson}
-						>
-							<option>Course</option>
-							{courseList.map((course) => (
-								<option value={course._id} key={course._id}>{course.name}</option>
-							))}
-
-						</Form.Control>
-					</Form.Group>
 
 				</Modal.Body>
 

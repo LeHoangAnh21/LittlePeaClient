@@ -4,7 +4,9 @@ import {
 	DELETE_BLOG,
 	UPDATE_BLOG,
 	FIND_BLOG_ID,
-	LIKE_BLOG
+	LIKE_BLOG,
+	UN_LIKE_BLOG,
+	SEARCH_BLOG
 } from "../context/constant";
 
 export const blogReducer = (state, action) => {
@@ -12,6 +14,12 @@ export const blogReducer = (state, action) => {
 
 	switch (type) {
 		case GET_BLOG:
+			return {
+				...state,
+				blogs: payload,
+				blogsLoading: false
+			}
+		case SEARCH_BLOG:
 			return {
 				...state,
 				blogs: payload,
@@ -43,6 +51,12 @@ export const blogReducer = (state, action) => {
 			return {
 				...state,
 				blogs: likeBlog
+			}
+		case UN_LIKE_BLOG:
+			const unlikeBlog = state.blogs.map((blog) => (blog._id === payload._id ? payload : blog))
+			return {
+				...state,
+				blogs: unlikeBlog
 			}
 		default:
 			return state

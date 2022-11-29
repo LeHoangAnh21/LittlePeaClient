@@ -3,7 +3,6 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useParams } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react'
-import { CourseContext } from '~/actions/context/CourseContext'
 import { TestContext } from '~/actions/context/TestContext';
 
 const AddTestModal = () => {
@@ -12,30 +11,11 @@ const AddTestModal = () => {
 
 	const courseId = id;
 
-	const {
-		courseState: { courses },
-		getCourses
-	} = useContext(CourseContext)
-
-	useEffect(() => {
-		getCourses()
-	}, [])
-
-	let courseName = null
-
-	if (courses !== null) {
-		// eslint-disable-next-line no-lone-blocks
-		{courses.map(course => {
-			if (courseId === course._id){
-				courseName = course.name;
-			}
-		})}
-	}
-
 	const { 
 		showAddTestModal, 
 		setShowAddTestModal, 
 		addTest,
+		setToastTest
 	} = useContext(TestContext)
 
 	// State
@@ -56,9 +36,9 @@ const AddTestModal = () => {
 
 	const onSubmit = async event => {
 		event.preventDefault()
-		const { success, message } = await addTest(newTest)
+		const { success, messageToastTest } = await addTest(newTest)
 		resetAddTestData()
-		// setShowToast({ show: true, message, type: success ? 'success' : 'danger' })
+		setToastTest({ showToastTest: true, messageToastTest, typeToastTest: success ? 'success' : 'danger' })
 	}
 
 	const resetAddTestData = () => {
@@ -102,7 +82,7 @@ const AddTestModal = () => {
 
 					</Form.Group><br />
 
-					<Form.Group>
+					{/* <Form.Group>
 
 						<Form.Control
 							as='select'
@@ -114,7 +94,7 @@ const AddTestModal = () => {
 							<option value={course}>{courseName}</option>
 						</Form.Control>
 
-					</Form.Group><br />
+					</Form.Group><br /> */}
 
 				</Modal.Body>
 

@@ -46,3 +46,21 @@
 	margin: 0 10px;
 	font-weight: 500;
 }
+
+.offer{
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+}
+
+.offer-title{
+	font-weight: bold;
+	font-size: 1.5rem;
+	color: #333;
+}
+
+.offer-course-title {
+	margin-left: 15px;
+	font-style: italic;
+	color: #333;
+}

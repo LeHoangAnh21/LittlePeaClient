@@ -20,6 +20,12 @@ const CategoryContextProvider = ({ children }) => {
 		categoriesLoading: true
 	})
 
+	const [showToast, setShowToast] = useState({
+		show: false,
+		message: '',
+		type: null
+	})
+
 	//Get category 
 	const getCategories = async () => {
 		try {
@@ -96,6 +102,8 @@ const CategoryContextProvider = ({ children }) => {
 		findCategoryId,
 		showUpdateCategoryModal,
 		setShowUpdateCategoryModal,
+		showToast,
+		setShowToast,
 	}
 
 	return (
